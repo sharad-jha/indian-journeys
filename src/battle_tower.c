@@ -1630,12 +1630,36 @@ static void FillTentTrainerParty(u8 monsCount)
     FillTentTrainerParty_(gTrainerBattleOpponent_A, 0, monsCount);
 }
 
+static u8 CalculateDynamicFrontierLevel(void)
+{
+    u8 highestPlayerLevel = 0;
+    s32 i;
+
+    // Find the highest level in the player's party
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL)
+            && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_EGG)
+        {
+            s32 level = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL, NULL);
+            if (level > highestPlayerLevel)
+                highestPlayerLevel = level;
+        }
+    }
+
+    // Return highest player level + 5, capped at MAX_LEVEL
+    if (highestPlayerLevel + 5 > MAX_LEVEL)
+        return MAX_LEVEL;
+    else
+        return highestPlayerLevel + 5;
+}
+
 static void FillTrainerParty(u16 trainerId, u8 firstMonId, u8 monCount)
 {
     s32 i, j;
     u16 chosenMonIndices[MAX_FRONTIER_PARTY_SIZE];
     u8 friendship = MAX_FRIENDSHIP;
-    u8 level = SetFacilityPtrsGetLevel();
+    u8 level = CalculateDynamicFrontierLevel();
     u8 fixedIV = 0;
     u8 bfMonCount;
     const u16 *monSet = NULL;

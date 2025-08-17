@@ -1014,3 +1014,50 @@ LittlerootTown_Text_BirchSomethingToShowYouAtLab:
 	.string "I have something to show you.\n"
 	.string "Let's go to my LAB.$"
 
+LittlerootTown_EventScript_KantoTruck::
+	lock
+	faceplayer
+	checkflag FLAG_WARP_TRUCK_UNLOCKED
+	goto_if_eq VAR_RESULT, TRUE, LittlerootTown_EventScript_KantoTruckUnlocked
+	msgbox LittlerootTown_Text_KantoTruckLocked, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_EventScript_KantoTruckUnlocked::
+	msgbox LittlerootTown_Text_KantoTruckUnlocked, MSGBOX_YESNO
+	compare VAR_RESULT, YES
+	goto_if_eq VAR_RESULT, YES, LittlerootTown_EventScript_GoToKanto
+	msgbox LittlerootTown_Text_KantoTruckMaybeLater, MSGBOX_DEFAULT
+	release
+	end
+
+LittlerootTown_EventScript_GoToKanto::
+	msgbox LittlerootTown_Text_KantoTruckDeparting, MSGBOX_DEFAULT
+	fadescreen FADE_TO_BLACK
+	delay 20
+	warp MAP_PALLET_TOWN, 0, 10, 10
+	fadescreen FADE_FROM_BLACK
+	release
+	end
+
+LittlerootTown_Text_KantoTruckLocked:
+	.string "This truck appears to be locked.\p"
+	.string "A note reads: 'Warp Truck to Kanto\n"
+	.string "- Only for Champions who have\l"
+	.string "defeated the Hoenn Elite Four!'$"
+
+LittlerootTown_Text_KantoTruckUnlocked:
+	.string "The truck is now unlocked!\p"
+	.string "It seems to be some kind of\n"
+	.string "transportation device.\p"
+	.string "Would you like to travel to\n"
+	.string "the Kanto region?$"
+
+LittlerootTown_Text_KantoTruckMaybeLater:
+	.string "Maybe later then.$"
+
+LittlerootTown_Text_KantoTruckDeparting:
+	.string "The truck's engine starts up.\p"
+	.string "You feel a strange sensation\n"
+	.string "as the world around you shifts…$"
+

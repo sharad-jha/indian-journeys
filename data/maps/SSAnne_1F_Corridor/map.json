@@ -1,0 +1,95 @@
+{
+  "id": "MAP_SS_ANNE_1F_CORRIDOR",
+  "name": "SSAnne_1F_Corridor",
+  "layout": "LAYOUT_SS_ANNE_1F_CORRIDOR",
+  "music": "MUS_SS_ANNE",
+  "region_map_section": "MAPSEC_SS_ANNE",
+  "requires_flash": false,
+  "weather": "WEATHER_SUNNY",
+  "map_type": "MAP_TYPE_INDOOR",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": false,
+  "show_map_name": false,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [],
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SAILOR",
+      "x": 8,
+      "y": 12,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "TRAINER_SS_ANNE_SAILOR_3",
+      "script": "SSAnne_1F_EventScript_Sailor3",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SAILOR",
+      "x": 15,
+      "y": 8,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WANDER_UP_AND_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 2,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "TRAINER_SS_ANNE_SAILOR_4",
+      "script": "SSAnne_1F_EventScript_Sailor4",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_GENTLEMAN",
+      "x": 22,
+      "y": 15,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "TRAINER_SS_ANNE_GENTLEMAN_2",
+      "script": "SSAnne_1F_EventScript_Gentleman2",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
+      "x": 28,
+      "y": 10,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WANDER_LEFT_AND_RIGHT",
+      "movement_range_x": 2,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "TRAINER_SS_ANNE_FISHERMAN_1",
+      "script": "SSAnne_1F_EventScript_Fisherman1",
+      "flag": "0"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 18,
+      "y": 18,
+      "elevation": 0,
+      "dest_map": "MAP_SS_ANNE_DECK",
+      "dest_warp_id": "1"
+    },
+    {
+      "x": 25,
+      "y": 8,
+      "elevation": 0,
+      "dest_map": "MAP_SS_ANNE_2F_CORRIDOR",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 10,
+      "y": 8,
+      "elevation": 0,
+      "dest_map": "MAP_SS_ANNE_B1F_CORRIDOR",
+      "dest_warp_id": "0"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": []
+}

@@ -376,12 +376,87 @@ static u8 PickWildMonNature(void)
     return Random() % NUM_NATURES;
 }
 
+static bool8 IsSpecialEventPokemon(u16 species)
+{
+    // Check if the species is a legendary or special event Pokémon
+    switch (species)
+    {
+    case SPECIES_MEWTWO:
+    case SPECIES_MEW:
+    case SPECIES_LUGIA:
+    case SPECIES_HO_OH:
+    case SPECIES_CELEBI:
+    case SPECIES_KYOGRE:
+    case SPECIES_GROUDON:
+    case SPECIES_RAYQUAZA:
+    case SPECIES_LATIAS:
+    case SPECIES_LATIOS:
+    case SPECIES_JIRACHI:
+    case SPECIES_DEOXYS:
+    case SPECIES_REGIROCK:
+    case SPECIES_REGICE:
+    case SPECIES_REGISTEEL:
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
+
+static u8 CalculateDynamicWildLevel(u8 baseLevel, u16 species)
+{
+    u8 highestPlayerLevel = 0;
+    u8 averagePlayerLevel = 0;
+    s32 i;
+    u8 validMons = 0;
+
+    // Find the highest level and calculate average level in the player's party
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL)
+            && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_EGG)
+        {
+            s32 level = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL, NULL);
+            if (level > highestPlayerLevel)
+                highestPlayerLevel = level;
+            averagePlayerLevel += level;
+            validMons++;
+        }
+    }
+
+    // Calculate average level
+    if (validMons > 0)
+        averagePlayerLevel = averagePlayerLevel / validMons;
+    else
+        averagePlayerLevel = 1;
+
+    // For special event Pokémon, use highest player level + 5
+    if (IsSpecialEventPokemon(species))
+    {
+        if (highestPlayerLevel + 5 > MAX_LEVEL)
+            return MAX_LEVEL;
+        else
+            return highestPlayerLevel + 5;
+    }
+    // For regular wild Pokémon, use average player level - 3
+    else
+    {
+        if (averagePlayerLevel > 3)
+            return averagePlayerLevel - 3;
+        else
+            return 1; // Minimum level of 1
+    }
+}
+
 static void CreateWildMon(u16 species, u8 level)
 {
     bool32 checkCuteCharm;
+    u8 dynamicLevel;
 
     ZeroEnemyPartyMons();
     checkCuteCharm = TRUE;
+
+    // Calculate dynamic level based on species type and player's highest level Pokémon
+    dynamicLevel = CalculateDynamicWildLevel(level, species);
 
     switch (gSpeciesInfo[species].genderRatio)
     {
@@ -407,11 +482,11 @@ static void CreateWildMon(u16 species, u8 level)
         else
             gender = MON_FEMALE;
 
-        CreateMonWithGenderNatureLetter(&gEnemyParty[0], species, level, USE_RANDOM_IVS, gender, PickWildMonNature(), 0);
+        CreateMonWithGenderNatureLetter(&gEnemyParty[0], species, dynamicLevel, USE_RANDOM_IVS, gender, PickWildMonNature(), 0);
         return;
     }
 
-    CreateMonWithNature(&gEnemyParty[0], species, level, USE_RANDOM_IVS, PickWildMonNature());
+    CreateMonWithNature(&gEnemyParty[0], species, dynamicLevel, USE_RANDOM_IVS, PickWildMonNature());
 }
 #ifdef BUGFIX
 #define TRY_GET_ABILITY_INFLUENCED_WILD_MON_INDEX(wildPokemon, type, ability, ptr, count) TryGetAbilityInfluencedWildMonIndex(wildPokemon, type, ability, ptr, count)
@@ -422,7 +497,6 @@ static void CreateWildMon(u16 species, u8 level)
 static bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, u8 area, u8 flags)
 {
     u8 wildMonIndex = 0;
-    u8 level;
 
     switch (area)
     {
@@ -445,33 +519,39 @@ static bool8 TryGenerateWildMon(const struct WildPokemonInfo *wildMonInfo, u8 ar
         break;
     }
 
-    level = ChooseWildMonLevel(&wildMonInfo->wildPokemon[wildMonIndex]);
-    if (flags & WILD_CHECK_REPEL && !IsWildLevelAllowedByRepel(level))
+    u8 baseLevel = ChooseWildMonLevel(&wildMonInfo->wildPokemon[wildMonIndex]);
+    u8 dynamicLevel = CalculateDynamicWildLevel(baseLevel, wildMonInfo->wildPokemon[wildMonIndex].species);
+    
+    if (flags & WILD_CHECK_REPEL && !IsWildLevelAllowedByRepel(dynamicLevel))
         return FALSE;
-    if (gMapHeader.mapLayoutId != LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS && flags & WILD_CHECK_KEEN_EYE && !IsAbilityAllowingEncounter(level))
+    if (gMapHeader.mapLayoutId != LAYOUT_BATTLE_FRONTIER_BATTLE_PIKE_ROOM_WILD_MONS && flags & WILD_CHECK_KEEN_EYE && !IsAbilityAllowingEncounter(dynamicLevel))
         return FALSE;
 
-    CreateWildMon(wildMonInfo->wildPokemon[wildMonIndex].species, level);
+    CreateWildMon(wildMonInfo->wildPokemon[wildMonIndex].species, dynamicLevel);
     return TRUE;
 }
 
 static u16 GenerateFishingWildMon(const struct WildPokemonInfo *wildMonInfo, u8 rod)
 {
     u8 wildMonIndex = ChooseWildMonIndex_Fishing(rod);
-    u8 level = ChooseWildMonLevel(&wildMonInfo->wildPokemon[wildMonIndex]);
+    u8 baseLevel = ChooseWildMonLevel(&wildMonInfo->wildPokemon[wildMonIndex]);
+    u8 dynamicLevel = CalculateDynamicWildLevel(baseLevel, wildMonInfo->wildPokemon[wildMonIndex].species);
 
-    CreateWildMon(wildMonInfo->wildPokemon[wildMonIndex].species, level);
+    CreateWildMon(wildMonInfo->wildPokemon[wildMonIndex].species, dynamicLevel);
     return wildMonInfo->wildPokemon[wildMonIndex].species;
 }
 
 static bool8 SetUpMassOutbreakEncounter(u8 flags)
 {
     u16 i;
+    u8 dynamicLevel;
 
     if (flags & WILD_CHECK_REPEL && !IsWildLevelAllowedByRepel(gSaveBlock1Ptr->outbreakPokemonLevel))
         return FALSE;
 
-    CreateWildMon(gSaveBlock1Ptr->outbreakPokemonSpecies, gSaveBlock1Ptr->outbreakPokemonLevel);
+    // Calculate dynamic level for outbreak Pokémon
+    dynamicLevel = CalculateDynamicWildLevel(gSaveBlock1Ptr->outbreakPokemonLevel, gSaveBlock1Ptr->outbreakPokemonSpecies);
+    CreateWildMon(gSaveBlock1Ptr->outbreakPokemonSpecies, dynamicLevel);
     for (i = 0; i < MAX_MON_MOVES; i++)
         SetMonMoveSlot(&gEnemyParty[0], gSaveBlock1Ptr->outbreakPokemonMoves[i], i);
 
@@ -783,10 +863,11 @@ void FishingWildEncounter(u8 rod)
 
     if (CheckFeebas() == TRUE)
     {
-        u8 level = ChooseWildMonLevel(&sWildFeebas);
+        u8 baseLevel = ChooseWildMonLevel(&sWildFeebas);
+        u8 dynamicLevel = CalculateDynamicWildLevel(baseLevel, sWildFeebas.species);
 
         species = sWildFeebas.species;
-        CreateWildMon(species, level);
+        CreateWildMon(species, dynamicLevel);
     }
     else
     {

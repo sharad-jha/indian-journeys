@@ -4,6 +4,8 @@ EventScript_CutTree::
 	goto_if_unset FLAG_BADGE01_GET, EventScript_CheckTreeCantCut
 	checkpartymove MOVE_CUT
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CheckTreeCantCut
+	callnative CanUseHM01Cut
+	goto_if_eq VAR_RESULT, FALSE, EventScript_CutRegionRestricted
 	setfieldeffectargument 0, VAR_RESULT
 	bufferpartymonnick STR_VAR_1, VAR_RESULT
 	buffermovename STR_VAR_2, MOVE_CUT
@@ -19,9 +21,16 @@ EventScript_CutTree::
 @ Use cut from party menu
 EventScript_UseCut::
 	lockall
+	callnative CanUseHM01Cut
+	goto_if_eq VAR_RESULT, FALSE, EventScript_CutRegionRestricted
 	dofieldeffect FLDEFF_USE_CUT_ON_TREE
 	waitstate
 	goto EventScript_CutTreeDown
+	end
+
+EventScript_CutRegionRestricted::
+	msgbox gText_HMNotUsableInKanto, MSGBOX_DEFAULT
+	releaseall
 	end
 
 EventScript_CutTreeDown::
@@ -63,6 +72,8 @@ EventScript_RockSmash::
 	goto_if_unset FLAG_BADGE03_GET, EventScript_CantSmashRock
 	checkpartymove MOVE_ROCK_SMASH
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantSmashRock
+	callnative CanUseHM06RockSmash
+	goto_if_eq VAR_RESULT, FALSE, EventScript_RockSmashRegionRestricted
 	setfieldeffectargument 0, VAR_RESULT
 	bufferpartymonnick STR_VAR_1, VAR_RESULT
 	buffermovename STR_VAR_2, MOVE_ROCK_SMASH
@@ -78,9 +89,16 @@ EventScript_RockSmash::
 @ Use rock smash from party menu
 EventScript_UseRockSmash::
 	lockall
+	callnative CanUseHM06RockSmash
+	goto_if_eq VAR_RESULT, FALSE, EventScript_RockSmashRegionRestricted
 	dofieldeffect FLDEFF_USE_ROCK_SMASH
 	waitstate
 	goto EventScript_SmashRock
+	end
+
+EventScript_RockSmashRegionRestricted::
+	msgbox gText_HMNotUsableInKanto, MSGBOX_DEFAULT
+	releaseall
 	end
 
 EventScript_SmashRock::
@@ -127,6 +145,8 @@ EventScript_StrengthBoulder::
 	goto_if_set FLAG_SYS_USE_STRENGTH, EventScript_CheckActivatedBoulder
 	checkpartymove MOVE_STRENGTH
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantStrength
+	callnative CanUseHM04Strength
+	goto_if_eq VAR_RESULT, FALSE, EventScript_StrengthRegionRestricted
 	setfieldeffectargument 0, VAR_RESULT
 	msgbox Text_WantToStrength, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, EventScript_CancelStrength
@@ -138,9 +158,16 @@ EventScript_StrengthBoulder::
 
 EventScript_UseStrength::
 	lockall
+	callnative CanUseHM04Strength
+	goto_if_eq VAR_RESULT, FALSE, EventScript_StrengthRegionRestricted
 	dofieldeffect FLDEFF_USE_STRENGTH
 	waitstate
 	goto EventScript_ActivateStrength
+	end
+
+EventScript_StrengthRegionRestricted::
+	msgbox gText_HMNotUsableInKanto, MSGBOX_DEFAULT
+	releaseall
 	end
 
 EventScript_ActivateStrength::
@@ -186,6 +213,8 @@ EventScript_UseWaterfall::
 	lockall
 	checkpartymove MOVE_WATERFALL
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantWaterfall
+	callnative CanUseHM07Waterfall
+	goto_if_eq VAR_RESULT, FALSE, EventScript_WaterfallRegionRestricted
 	bufferpartymonnick STR_VAR_1, VAR_RESULT
 	setfieldeffectargument 0, VAR_RESULT
 	msgbox Text_WantToWaterfall, MSGBOX_YESNO
@@ -193,6 +222,11 @@ EventScript_UseWaterfall::
 	msgbox Text_MonUsedWaterfall, MSGBOX_DEFAULT
 	dofieldeffect FLDEFF_USE_WATERFALL
 	goto EventScript_EndWaterfall
+
+EventScript_WaterfallRegionRestricted::
+	msgbox gText_HMNotUsableInKanto, MSGBOX_DEFAULT
+	releaseall
+	end
 
 EventScript_CannotUseWaterfall::
 	lockall
@@ -219,6 +253,8 @@ EventScript_UseDive::
 	lockall
 	checkpartymove MOVE_DIVE
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantDive
+	callnative CanUseHM08Dive
+	goto_if_eq VAR_RESULT, FALSE, EventScript_DiveRegionRestricted
 	bufferpartymonnick STR_VAR_1, VAR_RESULT
 	setfieldeffectargument 0, VAR_RESULT
 	setfieldeffectargument 1, 1
@@ -227,6 +263,11 @@ EventScript_UseDive::
 	msgbox Text_MonUsedDive, MSGBOX_DEFAULT
 	dofieldeffect FLDEFF_USE_DIVE
 	goto EventScript_EndDive
+	end
+
+EventScript_DiveRegionRestricted::
+	msgbox gText_HMNotUsableInKanto, MSGBOX_DEFAULT
+	releaseall
 	end
 
 EventScript_CantDive::
@@ -242,6 +283,8 @@ EventScript_UseDiveUnderwater::
 	lockall
 	checkpartymove MOVE_DIVE
 	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantSurface
+	callnative CanUseHM08Dive
+	goto_if_eq VAR_RESULT, FALSE, EventScript_DiveRegionRestricted
 	bufferpartymonnick STR_VAR_1, VAR_RESULT
 	setfieldeffectargument 0, VAR_RESULT
 	setfieldeffectargument 1, 1

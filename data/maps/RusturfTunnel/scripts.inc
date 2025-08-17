@@ -58,6 +58,7 @@ RusturfTunnel_EventScript_ClearTunnelScene::
 	call_if_eq VAR_TEMP_1, 3, RusturfTunnel_EventScript_WandasBoyfriendApproachPlayer
 	giveitem ITEM_HM_STRENGTH
 	setflag FLAG_RECEIVED_HM_STRENGTH
+	callnative SetHMObtainedInCurrentRegion, ITEM_HM_STRENGTH
 	msgbox RusturfTunnel_Text_ExplainStrength, MSGBOX_DEFAULT
 	closemessage
 	call_if_eq VAR_TEMP_1, 1, RusturfTunnel_EventScript_BoyfriendApproachWanda1

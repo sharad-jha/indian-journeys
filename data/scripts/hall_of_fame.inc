@@ -22,6 +22,7 @@ EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags::
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM
 	call_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 0, EverGrandeCity_HallOfFame_EventScript_ReadyDexUpgradeEvent
+	call EverGrandeCity_HallOfFame_EventScript_CheckTravelUnlocks
 	return
 
 EverGrandeCity_HallOfFame_EventScript_ResetDefeatedEventLegendaries::
@@ -48,4 +49,27 @@ EverGrandeCity_HallOfFame_EventScript_ReadyReceiveSSTicketEvent::
 
 EverGrandeCity_HallOfFame_EventScript_ReadyDexUpgradeEvent::
 	setvar VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 1
+	return
+
+@ Inter-Region Travel Unlock System
+EverGrandeCity_HallOfFame_EventScript_CheckTravelUnlocks::
+	@ Unlock Warp Truck (Hoenn Elite Four defeated)
+	checkflag FLAG_ELITE_4_DEFEATED
+	goto_if_eq VAR_RESULT, TRUE, EverGrandeCity_HallOfFame_EventScript_UnlockWarpTruck
+	goto EverGrandeCity_HallOfFame_EventScript_CheckFerryUnlock
+	
+EverGrandeCity_HallOfFame_EventScript_UnlockWarpTruck::
+	setflag FLAG_WARP_TRUCK_UNLOCKED
+	goto EverGrandeCity_HallOfFame_EventScript_CheckFerryUnlock
+	
+EverGrandeCity_HallOfFame_EventScript_CheckFerryUnlock::
+	@ Unlock Ferry (Both Elite Four defeated)
+	checkflag FLAG_ELITE_4_DEFEATED
+	goto_if_ne VAR_RESULT, TRUE, EverGrandeCity_HallOfFame_EventScript_TravelUnlockEnd
+	checkflag FLAG_KANTO_ELITE_4_DEFEATED
+	goto_if_ne VAR_RESULT, TRUE, EverGrandeCity_HallOfFame_EventScript_TravelUnlockEnd
+	setflag FLAG_FERRY_UNLOCKED
+	goto EverGrandeCity_HallOfFame_EventScript_TravelUnlockEnd
+	
+EverGrandeCity_HallOfFame_EventScript_TravelUnlockEnd::
 	return

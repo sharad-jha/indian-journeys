@@ -2494,6 +2494,30 @@ void SetFrontierBrainObjEventGfx_2(void)
 
 #define FRONTIER_BRAIN_OTID 61226
 
+static u8 CalculateDynamicBrainLevel(void)
+{
+    u8 highestPlayerLevel = 0;
+    s32 i;
+
+    // Find the highest level in the player's party
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL)
+            && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_EGG)
+        {
+            s32 level = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL, NULL);
+            if (level > highestPlayerLevel)
+                highestPlayerLevel = level;
+        }
+    }
+
+    // Return highest player level + 5, capped at MAX_LEVEL
+    if (highestPlayerLevel + 5 > MAX_LEVEL)
+        return MAX_LEVEL;
+    else
+        return highestPlayerLevel + 5;
+}
+
 void CreateFrontierBrainPokemon(void)
 {
     s32 i, j;
@@ -2511,7 +2535,7 @@ void CreateFrontierBrainPokemon(void)
 
     ZeroEnemyPartyMons();
     monPartyId = 0;
-    monLevel = SetFacilityPtrsGetLevel();
+    monLevel = CalculateDynamicBrainLevel();
     for (i = 0; i < FRONTIER_PARTY_SIZE; selectedMonBits >>= 1, i++)
     {
         if (!(selectedMonBits & 1))

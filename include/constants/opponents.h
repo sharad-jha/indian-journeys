@@ -154,6 +154,7 @@
 #define TRAINER_STEVE_5                     150
 #define TRAINER_LUIS                        151
 #define TRAINER_DOMINIK                     152
+#define TRAINER_BROCK                         153
 #define TRAINER_DOUGLAS                     153
 #define TRAINER_DARRIN                      154
 #define TRAINER_TONY_1                      155
@@ -857,11 +858,360 @@
 #define TRAINER_BRENDAN_PLACEHOLDER         853
 #define TRAINER_MAY_PLACEHOLDER             854
 
-// NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
-//       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
-//       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
+// Kanto Region Trainers
+#define TRAINER_BROCK                        855
+#define TRAINER_MISTY                        856
+#define TRAINER_LT_SURGE                     857
+#define TRAINER_ERIKA                        858
+#define TRAINER_KOGA                         859
+#define TRAINER_SABRINA                      860
+#define TRAINER_BLAINE                       861
+#define TRAINER_GIOVANNI                     862
+#define TRAINER_LORELEI                      863
+#define TRAINER_BRUNO                        864
+#define TRAINER_AGATHA                       865
+#define TRAINER_LANCE                        866
+#define TRAINER_BLUE                         867
+#define TRAINER_RIVAL_GARY                   868
+#define TRAINER_JESSIE_JAMES                 869
+#define TRAINER_PROFESSOR_OAK                870
+#define TRAINER_GIOVANNI_ROCKET              871
+#define TRAINER_MR_FUJI                      872
+#define TRAINER_SILPH_PRESIDENT              873
+#define TRAINER_SS_ANNE_CAPTAIN              874
+#define TRAINER_MANSION_CARETAKER            875
 
-#define TRAINERS_COUNT                      855
-#define MAX_TRAINERS_COUNT                  864
+// Kanto Generic Trainers - Route Trainers
+#define TRAINER_ROUTE1_YOUNGSTER_1           876
+#define TRAINER_ROUTE1_LASS_1                877
+#define TRAINER_ROUTE2_BUG_CATCHER_1         878
+#define TRAINER_ROUTE2_YOUNGSTER_1           879
+#define TRAINER_ROUTE3_YOUNGSTER_1           880
+#define TRAINER_ROUTE3_LASS_1                881
+#define TRAINER_ROUTE3_BUG_CATCHER_1         882
+#define TRAINER_ROUTE4_HIKER_1               883
+#define TRAINER_ROUTE4_YOUNGSTER_1           884
+#define TRAINER_ROUTE5_LASS_1                885
+#define TRAINER_ROUTE5_YOUNGSTER_1           886
+#define TRAINER_ROUTE6_BUG_CATCHER_1         887
+#define TRAINER_ROUTE6_LASS_1                888
+#define TRAINER_ROUTE7_YOUNGSTER_1           889
+#define TRAINER_ROUTE7_LASS_1                890
+#define TRAINER_ROUTE8_GAMBLER_1             891
+#define TRAINER_ROUTE8_SUPER_NERD_1          892
+#define TRAINER_ROUTE9_HIKER_1               893
+#define TRAINER_ROUTE9_YOUNGSTER_1           894
+#define TRAINER_ROUTE10_HIKER_1              895
+#define TRAINER_ROUTE10_ROCKER_1             896
+#define TRAINER_ROUTE11_YOUNGSTER_1          897
+#define TRAINER_ROUTE11_ENGINEER_1           898
+#define TRAINER_ROUTE12_FISHERMAN_1          899
+#define TRAINER_ROUTE12_ROCKER_1             900
+#define TRAINER_ROUTE13_BEAUTY_1             901
+#define TRAINER_ROUTE13_BIRD_KEEPER_1        902
+#define TRAINER_ROUTE14_BIRD_KEEPER_1        903
+#define TRAINER_ROUTE14_BEAUTY_1             904
+#define TRAINER_ROUTE15_BIRD_KEEPER_1        905
+#define TRAINER_ROUTE15_BEAUTY_1             906
+#define TRAINER_ROUTE16_BIKER_1              907
+#define TRAINER_ROUTE16_CUE_BALL_1           908
+#define TRAINER_ROUTE17_BIKER_1              909
+#define TRAINER_ROUTE17_CUE_BALL_1           910
+#define TRAINER_ROUTE18_BIRD_KEEPER_1        911
+#define TRAINER_ROUTE18_BIKER_1              912
+#define TRAINER_ROUTE19_SWIMMER_M_1          913
+#define TRAINER_ROUTE19_SWIMMER_F_1          914
+#define TRAINER_ROUTE20_SWIMMER_M_1          915
+#define TRAINER_ROUTE20_SWIMMER_F_1          916
+#define TRAINER_ROUTE21_FISHERMAN_1          917
+#define TRAINER_ROUTE21_SWIMMER_M_1          918
+#define TRAINER_ROUTE22_YOUNGSTER_1          919
+#define TRAINER_ROUTE22_BUG_CATCHER_1        920
+#define TRAINER_ROUTE23_COOLTRAINER_M_1      921
+#define TRAINER_ROUTE23_COOLTRAINER_F_1      922
+#define TRAINER_ROUTE24_YOUNGSTER_1          923
+#define TRAINER_ROUTE24_LASS_1               924
+#define TRAINER_ROUTE25_YOUNGSTER_1          925
+#define TRAINER_ROUTE25_LASS_1               926
+
+// Kanto Generic Trainers - Cave Trainers
+#define TRAINER_VIRIDIAN_FOREST_BUG_CATCHER_1 927
+#define TRAINER_VIRIDIAN_FOREST_BUG_CATCHER_2 928
+#define TRAINER_MT_MOON_SUPER_NERD_1          929
+#define TRAINER_MT_MOON_HIKER_1               930
+#define TRAINER_MT_MOON_BUG_CATCHER_1         931
+#define TRAINER_ROCK_TUNNEL_HIKER_1           932
+#define TRAINER_ROCK_TUNNEL_PICNICKER_1       933
+#define TRAINER_DIGLETTS_CAVE_HIKER_1         934
+#define TRAINER_SEAFOAM_ISLANDS_SWIMMER_M_1   935
+#define TRAINER_SEAFOAM_ISLANDS_SWIMMER_F_1   936
+#define TRAINER_VICTORY_ROAD_COOLTRAINER_M_1  937
+#define TRAINER_VICTORY_ROAD_COOLTRAINER_F_1  938
+#define TRAINER_VICTORY_ROAD_JUGGLER_1        939
+
+// Kanto Generic Trainers - Building Trainers
+#define TRAINER_POKEMON_TOWER_CHANNELER_1     940
+#define TRAINER_POKEMON_TOWER_CHANNELER_2     941
+#define TRAINER_POKEMON_TOWER_CHANNELER_3     942
+#define TRAINER_SILPH_CO_SCIENTIST_1          943
+#define TRAINER_SILPH_CO_SCIENTIST_2          944
+#define TRAINER_SILPH_CO_ROCKET_GRUNT_1       945
+#define TRAINER_SILPH_CO_ROCKET_GRUNT_2       946
+#define TRAINER_ROCKET_HIDEOUT_ROCKET_GRUNT_1 947
+#define TRAINER_ROCKET_HIDEOUT_ROCKET_GRUNT_2 948
+#define TRAINER_ROCKET_HIDEOUT_ROCKET_GRUNT_3 949
+#define TRAINER_GAME_CORNER_GAMBLER_1         950
+#define TRAINER_GAME_CORNER_ROCKET_GRUNT_1    951
+#define TRAINER_POKEMON_MANSION_SCIENTIST_1   952
+#define TRAINER_POKEMON_MANSION_SCIENTIST_2   953
+#define TRAINER_POWER_PLANT_ENGINEER_1        954
+#define TRAINER_POWER_PLANT_ENGINEER_2        955
+
+// Kanto Generic Trainers - Special Locations
+#define TRAINER_SS_ANNE_GENTLEMAN_1           956
+#define TRAINER_SS_ANNE_SAILOR_1              957
+#define TRAINER_SAFARI_ZONE_RANGER_1          958
+#define TRAINER_SAFARI_ZONE_RANGER_2          959
+
+// Fire Red Expansion: Adding trainers to match original Fire Red trainer count (~245-260 total)
+// Expanded trainer flag space and count to accommodate full Fire Red implementation
+
+// Fire Red Route Trainer Expansions (High Priority Routes)
+#define TRAINER_ROUTE3_BUG_CATCHER_2         960
+#define TRAINER_ROUTE3_BUG_CATCHER_3         961
+#define TRAINER_ROUTE3_YOUNGSTER_2           962
+#define TRAINER_ROUTE3_CAMPER_1              963
+#define TRAINER_ROUTE3_PICNICKER_1           964
+#define TRAINER_ROUTE4_PICNICKER_1           965
+#define TRAINER_ROUTE4_CAMPER_1              966
+#define TRAINER_ROUTE9_HIKER_2               967
+#define TRAINER_ROUTE9_HIKER_3               968
+#define TRAINER_ROUTE9_PICNICKER_1           969
+#define TRAINER_ROUTE9_PICNICKER_2           970
+#define TRAINER_ROUTE10_HIKER_2              971
+#define TRAINER_ROUTE10_PICNICKER_1          972
+#define TRAINER_ROUTE10_POKEMANIAC_1         973
+#define TRAINER_ROUTE11_YOUNGSTER_2          974
+#define TRAINER_ROUTE11_YOUNGSTER_3          975
+#define TRAINER_ROUTE11_ENGINEER_2           976
+#define TRAINER_ROUTE11_ENGINEER_3           977
+#define TRAINER_ROUTE11_GAMBLER_1            978
+#define TRAINER_ROUTE11_GAMBLER_2            979
+#define TRAINER_ROUTE12_FISHERMAN_2          980
+#define TRAINER_ROUTE12_FISHERMAN_3          981
+#define TRAINER_ROUTE12_ROCKER_2             982
+#define TRAINER_ROUTE12_YOUNG_COUPLE_1       983
+#define TRAINER_ROUTE13_PICNICKER_1          984
+#define TRAINER_ROUTE13_PICNICKER_2          985
+#define TRAINER_ROUTE13_BIRD_KEEPER_2        986
+#define TRAINER_ROUTE14_PICNICKER_1          987
+#define TRAINER_ROUTE14_PICNICKER_2          988
+#define TRAINER_ROUTE14_BIRD_KEEPER_2        989
+#define TRAINER_ROUTE15_PICNICKER_1          990
+#define TRAINER_ROUTE15_PICNICKER_2          991
+#define TRAINER_ROUTE15_BIRD_KEEPER_2        992
+#define TRAINER_ROUTE15_BEAUTY_2             993
+#define TRAINER_ROUTE17_BIKER_2              994
+#define TRAINER_ROUTE17_BIKER_3              995
+#define TRAINER_ROUTE17_BIKER_4              996
+#define TRAINER_ROUTE17_BIKER_5              997
+#define TRAINER_ROUTE17_CUE_BALL_2           998
+#define TRAINER_ROUTE17_CUE_BALL_3           999
+
+// Phase 2A: High-Impact Areas - Routes 24-25 (Nugget Bridge)
+#define TRAINER_ROUTE24_BUG_CATCHER_1        1000
+#define TRAINER_ROUTE24_BUG_CATCHER_2        1001
+#define TRAINER_ROUTE24_CAMPER_1             1002
+#define TRAINER_ROUTE24_CAMPER_2             1003
+#define TRAINER_ROUTE24_YOUNGSTER_2          1004
+#define TRAINER_ROUTE25_HIKER_1              1005
+#define TRAINER_ROUTE25_HIKER_2              1006
+#define TRAINER_ROUTE25_PICNICKER_1          1007
+#define TRAINER_ROUTE25_PICNICKER_2          1008
+#define TRAINER_ROUTE25_YOUNGSTER_2          1009
+
+// Phase 2A: S.S. Anne Trainers (15 trainers - major Fire Red location)
+#define TRAINER_SS_ANNE_SAILOR_2             1010
+#define TRAINER_SS_ANNE_SAILOR_3             1011
+#define TRAINER_SS_ANNE_SAILOR_4             1012
+#define TRAINER_SS_ANNE_SAILOR_5             1013
+#define TRAINER_SS_ANNE_SAILOR_6             1014
+#define TRAINER_SS_ANNE_SAILOR_7             1015
+#define TRAINER_SS_ANNE_SAILOR_8             1016
+#define TRAINER_SS_ANNE_GENTLEMAN_2          1017
+#define TRAINER_SS_ANNE_GENTLEMAN_3          1018
+#define TRAINER_SS_ANNE_GENTLEMAN_4          1019
+#define TRAINER_SS_ANNE_GENTLEMAN_5          1020
+#define TRAINER_SS_ANNE_FISHERMAN_1          1021
+#define TRAINER_SS_ANNE_FISHERMAN_2          1022
+#define TRAINER_SS_ANNE_YOUNGSTER_1          1023
+#define TRAINER_SS_ANNE_LASS_1               1024
+
+// Phase 2A: Pokemon Tower Trainers (12 Channelers across 7 floors)
+#define TRAINER_POKEMON_TOWER_CHANNELER_4    1025
+#define TRAINER_POKEMON_TOWER_CHANNELER_5    1026
+#define TRAINER_POKEMON_TOWER_CHANNELER_6    1027
+#define TRAINER_POKEMON_TOWER_CHANNELER_7    1028
+#define TRAINER_POKEMON_TOWER_CHANNELER_8    1029
+#define TRAINER_POKEMON_TOWER_CHANNELER_9    1030
+#define TRAINER_POKEMON_TOWER_CHANNELER_10   1031
+#define TRAINER_POKEMON_TOWER_CHANNELER_11   1032
+#define TRAINER_POKEMON_TOWER_CHANNELER_12   1033
+#define TRAINER_POKEMON_TOWER_CHANNELER_13   1034
+#define TRAINER_POKEMON_TOWER_CHANNELER_14   1035
+#define TRAINER_POKEMON_TOWER_CHANNELER_15   1036
+
+// Phase 2B: Silph Co. Trainers (20 trainers across 11 floors)
+#define TRAINER_SILPH_CO_SCIENTIST_3         1037
+#define TRAINER_SILPH_CO_SCIENTIST_4         1038
+#define TRAINER_SILPH_CO_SCIENTIST_5         1039
+#define TRAINER_SILPH_CO_SCIENTIST_6         1040
+#define TRAINER_SILPH_CO_SCIENTIST_7         1041
+#define TRAINER_SILPH_CO_SCIENTIST_8         1042
+#define TRAINER_SILPH_CO_ROCKET_GRUNT_3      1043
+#define TRAINER_SILPH_CO_ROCKET_GRUNT_4      1044
+#define TRAINER_SILPH_CO_ROCKET_GRUNT_5      1045
+#define TRAINER_SILPH_CO_ROCKET_GRUNT_6      1046
+#define TRAINER_SILPH_CO_ROCKET_GRUNT_7      1047
+#define TRAINER_SILPH_CO_ROCKET_GRUNT_8      1048
+#define TRAINER_SILPH_CO_ROCKET_GRUNT_9      1049
+#define TRAINER_SILPH_CO_ROCKET_GRUNT_10     1050
+#define TRAINER_SILPH_CO_ROCKET_GRUNT_11     1051
+#define TRAINER_SILPH_CO_ROCKET_GRUNT_12     1052
+#define TRAINER_SILPH_CO_JUGGERNAUT_1        1053
+#define TRAINER_SILPH_CO_JUGGERNAUT_2        1054
+#define TRAINER_SILPH_CO_PSYCHIC_1           1055
+#define TRAINER_SILPH_CO_PSYCHIC_2           1056
+
+// Phase 2B: Victory Road Trainers (12 advanced trainers)
+#define TRAINER_VICTORY_ROAD_COOLTRAINER_M_2 1057
+#define TRAINER_VICTORY_ROAD_COOLTRAINER_M_3 1058
+#define TRAINER_VICTORY_ROAD_COOLTRAINER_F_2 1059
+#define TRAINER_VICTORY_ROAD_COOLTRAINER_F_3 1060
+#define TRAINER_VICTORY_ROAD_JUGGLER_2       1061
+#define TRAINER_VICTORY_ROAD_JUGGLER_3       1062
+#define TRAINER_VICTORY_ROAD_TAMER_1         1063
+#define TRAINER_VICTORY_ROAD_TAMER_2         1064
+#define TRAINER_VICTORY_ROAD_POKEMANIAC_1    1065
+#define TRAINER_VICTORY_ROAD_POKEMANIAC_2    1066
+#define TRAINER_VICTORY_ROAD_BLACKBELT_1     1067
+#define TRAINER_VICTORY_ROAD_BLACKBELT_2     1068
+
+// Phase 2B: Remaining Route Trainers (Routes 12-16, 18-23)
+#define TRAINER_ROUTE12_FISHERMAN_4          1069
+#define TRAINER_ROUTE12_FISHERMAN_5          1070
+#define TRAINER_ROUTE12_YOUNG_COUPLE_2       1071
+#define TRAINER_ROUTE12_PICNICKER_1          1072
+#define TRAINER_ROUTE13_PICNICKER_3          1073
+#define TRAINER_ROUTE13_BEAUTY_2             1074
+#define TRAINER_ROUTE14_PICNICKER_3          1075
+#define TRAINER_ROUTE14_BEAUTY_2             1076
+#define TRAINER_ROUTE15_PICNICKER_3          1077
+#define TRAINER_ROUTE15_BEAUTY_3             1078
+#define TRAINER_ROUTE16_BIKER_2              1079
+#define TRAINER_ROUTE16_BIKER_3              1080
+#define TRAINER_ROUTE16_CUE_BALL_2           1081
+#define TRAINER_ROUTE18_BIRD_KEEPER_2        1082
+#define TRAINER_ROUTE18_BIKER_2              1083
+#define TRAINER_ROUTE19_SWIMMER_M_2          1084
+#define TRAINER_ROUTE19_SWIMMER_F_2          1085
+#define TRAINER_ROUTE20_SWIMMER_M_2          1086
+#define TRAINER_ROUTE20_SWIMMER_F_2          1087
+#define TRAINER_ROUTE21_FISHERMAN_2          1088
+#define TRAINER_ROUTE21_SWIMMER_M_2          1089
+#define TRAINER_ROUTE22_YOUNGSTER_2          1090
+#define TRAINER_ROUTE22_HIKER_1              1091
+#define TRAINER_ROUTE23_COOLTRAINER_M_2      1092
+#define TRAINER_ROUTE23_COOLTRAINER_F_2      1093
+
+// Phase 2B: Gym Trainers (2 trainers before each gym leader - 16 total)
+#define TRAINER_PEWTER_GYM_JR_TRAINER_M_1    1094
+#define TRAINER_PEWTER_GYM_JR_TRAINER_M_2    1095
+#define TRAINER_CERULEAN_GYM_JR_TRAINER_F_1  1096
+#define TRAINER_CERULEAN_GYM_JR_TRAINER_F_2  1097
+#define TRAINER_VERMILION_GYM_ENGINEER_1     1098
+#define TRAINER_VERMILION_GYM_ENGINEER_2     1099
+#define TRAINER_CELADON_GYM_BEAUTY_1         1100
+#define TRAINER_CELADON_GYM_LASS_1           1101
+#define TRAINER_FUCHSIA_GYM_JUGGLER_1        1102
+#define TRAINER_FUCHSIA_GYM_JUGGLER_2        1103
+#define TRAINER_SAFFRON_GYM_PSYCHIC_1        1104
+#define TRAINER_SAFFRON_GYM_PSYCHIC_2        1105
+#define TRAINER_CINNABAR_GYM_SUPER_NERD_1    1106
+#define TRAINER_CINNABAR_GYM_SUPER_NERD_2    1107
+#define TRAINER_VIRIDIAN_GYM_COOLTRAINER_M_1 1108
+#define TRAINER_VIRIDIAN_GYM_COOLTRAINER_F_1 1109
+
+// Phase 2B: Cave/Special Location Expansions
+#define TRAINER_VIRIDIAN_FOREST_BUG_CATCHER_3 1110
+#define TRAINER_VIRIDIAN_FOREST_BUG_CATCHER_4 1111
+#define TRAINER_MT_MOON_SUPER_NERD_2          1112
+#define TRAINER_MT_MOON_SUPER_NERD_3          1113
+#define TRAINER_MT_MOON_HIKER_2               1114
+#define TRAINER_MT_MOON_BUG_CATCHER_2         1115
+#define TRAINER_ROCK_TUNNEL_HIKER_2           1116
+#define TRAINER_ROCK_TUNNEL_HIKER_3           1117
+#define TRAINER_ROCK_TUNNEL_PICNICKER_2       1118
+#define TRAINER_ROCK_TUNNEL_PICNICKER_3       1119
+#define TRAINER_SEAFOAM_ISLANDS_SWIMMER_M_2   1120
+#define TRAINER_SEAFOAM_ISLANDS_SWIMMER_M_3   1121
+#define TRAINER_SEAFOAM_ISLANDS_SWIMMER_F_2   1122
+#define TRAINER_SEAFOAM_ISLANDS_SWIMMER_F_3   1123
+#define TRAINER_POKEMON_MANSION_SCIENTIST_3   1124
+#define TRAINER_POKEMON_MANSION_SCIENTIST_4   1125
+#define TRAINER_POKEMON_MANSION_BURGLAR_1     1126
+#define TRAINER_POKEMON_MANSION_BURGLAR_2     1127
+#define TRAINER_POWER_PLANT_ENGINEER_3        1128
+#define TRAINER_POWER_PLANT_ENGINEER_4        1129
+
+// Phase 2B: Rocket Hideout & Game Corner Expansions
+#define TRAINER_ROCKET_HIDEOUT_ROCKET_GRUNT_4 1130
+#define TRAINER_ROCKET_HIDEOUT_ROCKET_GRUNT_5 1131
+#define TRAINER_ROCKET_HIDEOUT_ROCKET_GRUNT_6 1132
+#define TRAINER_GAME_CORNER_GAMBLER_2         1133
+#define TRAINER_GAME_CORNER_GAMBLER_3         1134
+#define TRAINER_GAME_CORNER_ROCKET_GRUNT_2    1135
+
+// Phase 2B: Safari Zone & Additional Special Trainers
+#define TRAINER_SAFARI_ZONE_RANGER_3          1136
+#define TRAINER_SAFARI_ZONE_RANGER_4          1137
+#define TRAINER_SAFARI_ZONE_RANGER_5          1138
+#define TRAINER_SAFARI_ZONE_RANGER_6          1139
+
+// Phase 3: Final 24 Trainers for 100% Fire Red Completion
+// Additional Route Trainers for Perfect Density
+#define TRAINER_ROUTE14_PICNICKER_4           1140
+#define TRAINER_ROUTE15_PICNICKER_4           1141
+#define TRAINER_ROUTE16_BIKER_4               1142
+#define TRAINER_ROUTE18_BIKER_3               1143
+#define TRAINER_ROUTE19_SWIMMER_M_3           1144
+#define TRAINER_ROUTE20_SWIMMER_M_3           1145
+#define TRAINER_ROUTE21_SWIMMER_M_3           1146
+#define TRAINER_ROUTE22_BUG_CATCHER_2         1147
+#define TRAINER_ROUTE23_COOLTRAINER_M_3       1148
+#define TRAINER_ROUTE24_LASS_2                1149
+
+// Additional Building Trainers for Complete Coverage
+#define TRAINER_POKEMON_MANSION_SCIENTIST_5   1150
+#define TRAINER_POKEMON_MANSION_BURGLAR_3     1151
+#define TRAINER_POKEMON_MANSION_BURGLAR_4     1152
+#define TRAINER_POWER_PLANT_ENGINEER_5        1153
+#define TRAINER_POWER_PLANT_ENGINEER_6        1154
+#define TRAINER_ROCK_TUNNEL_HIKER_4           1155
+#define TRAINER_ROCK_TUNNEL_PICNICKER_4       1156
+#define TRAINER_SEAFOAM_ISLANDS_SWIMMER_M_4   1157
+#define TRAINER_SEAFOAM_ISLANDS_SWIMMER_F_4   1158
+
+// Additional Rocket & Game Corner Trainers
+#define TRAINER_ROCKET_HIDEOUT_ROCKET_GRUNT_7 1159
+#define TRAINER_ROCKET_HIDEOUT_ROCKET_GRUNT_8 1160
+#define TRAINER_GAME_CORNER_GAMBLER_4         1161
+#define TRAINER_GAME_CORNER_ROCKET_GRUNT_3    1162
+
+// Final Special Trainers for 100% Fire Red Authenticity
+#define TRAINER_DIGLETTS_CAVE_HIKER_2         1163
+
+#define TRAINERS_COUNT                      1164
+#define MAX_TRAINERS_COUNT                  1200
 
 #endif  // GUARD_CONSTANTS_OPPONENTS_H

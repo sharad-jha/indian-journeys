@@ -400,6 +400,30 @@ static void SetRentalsToOpponentParty(void)
     }
 }
 
+static u8 CalculateDynamicFactoryLevel(void)
+{
+    u8 highestPlayerLevel = 0;
+    s32 i;
+
+    // Find the highest level in the player's party
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL)
+            && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_EGG)
+        {
+            s32 level = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL, NULL);
+            if (level > highestPlayerLevel)
+                highestPlayerLevel = level;
+        }
+    }
+
+    // Return highest player level + 5, capped at MAX_LEVEL
+    if (highestPlayerLevel + 5 > MAX_LEVEL)
+        return MAX_LEVEL;
+    else
+        return highestPlayerLevel + 5;
+}
+
 static void SetPlayerAndOpponentParties(void)
 {
     int i, j, k;
@@ -419,10 +443,7 @@ static void SetPlayerAndOpponentParties(void)
     else
     {
         gFacilityTrainerMons = gBattleFrontierMons;
-        if (gSaveBlock2Ptr->frontier.lvlMode != FRONTIER_LVL_50)
-            monLevel = FRONTIER_MAX_LEVEL_OPEN;
-        else
-            monLevel = FRONTIER_MAX_LEVEL_50;
+        monLevel = CalculateDynamicFactoryLevel();
     }
 
     if (gSpecialVar_0x8005 < 2)
@@ -770,7 +791,7 @@ void FillFactoryBrainParty(void)
     u8 battleMode = VarGet(VAR_FRONTIER_BATTLE_MODE);
     u8 challengeNum = gSaveBlock2Ptr->frontier.factoryWinStreaks[battleMode][lvlMode] / FRONTIER_STAGES_PER_CHALLENGE;
     fixedIV = GetFactoryMonFixedIV(challengeNum + 2, FALSE);
-    monLevel = SetFacilityPtrsGetLevel();
+    monLevel = CalculateDynamicFactoryLevel();
     i = 0;
     otId = T1_READ_32(gSaveBlock2Ptr->playerTrainerId);
 

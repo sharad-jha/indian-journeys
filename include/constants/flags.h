@@ -1333,6 +1333,172 @@
 #define FLAG_DEFEATED_ELITE_4_PHOEBE                                0x4FC
 #define FLAG_DEFEATED_ELITE_4_GLACIA                                0x4FD
 #define FLAG_DEFEATED_ELITE_4_DRAKE                                 0x4FE
+#define FLAG_ELITE_4_DEFEATED                                        0x4FF
+
+// HM Region-Specific Flags
+// Hoenn HM Flags
+#define FLAG_HM01_OBTAINED_IN_HOENN                                  0x500
+#define FLAG_HM02_OBTAINED_IN_HOENN                                  0x501
+#define FLAG_HM03_OBTAINED_IN_HOENN                                  0x502
+#define FLAG_HM04_OBTAINED_IN_HOENN                                  0x503
+#define FLAG_HM05_OBTAINED_IN_HOENN                                  0x504
+#define FLAG_HM06_OBTAINED_IN_HOENN                                  0x505
+#define FLAG_HM07_OBTAINED_IN_HOENN                                  0x506
+#define FLAG_HM08_OBTAINED_IN_HOENN                                  0x507
+
+// Kanto HM Flags
+#define FLAG_HM01_OBTAINED_IN_KANTO                                  0x508
+#define FLAG_HM02_OBTAINED_IN_KANTO                                  0x509
+#define FLAG_HM03_OBTAINED_IN_KANTO                                  0x50A
+#define FLAG_HM04_OBTAINED_IN_KANTO                                  0x50B
+#define FLAG_HM05_OBTAINED_IN_KANTO                                  0x50C
+#define FLAG_HM06_OBTAINED_IN_KANTO                                  0x50D
+#define FLAG_HM07_OBTAINED_IN_KANTO                                  0x50E
+#define FLAG_HM08_OBTAINED_IN_KANTO                                  0x50F
+
+// Kanto Gym Leader Defeat Flags
+#define FLAG_DEFEATED_PEWTER_GYM                                     0x510
+#define FLAG_DEFEATED_CERULEAN_GYM                                   0x511
+#define FLAG_DEFEATED_VERMILION_GYM                                  0x512
+#define FLAG_DEFEATED_CELADON_GYM                                    0x513
+#define FLAG_DEFEATED_FUCHSIA_GYM                                    0x514
+#define FLAG_DEFEATED_SAFFRON_GYM                                    0x515
+#define FLAG_DEFEATED_CINNABAR_GYM                                   0x516
+#define FLAG_DEFEATED_VIRIDIAN_GYM                                   0x517
+
+// Kanto Badge Flags
+#define FLAG_BADGE01_GET                                              0x518
+#define FLAG_BADGE02_GET                                              0x519
+#define FLAG_BADGE03_GET                                              0x51A
+#define FLAG_BADGE04_GET                                              0x51B
+#define FLAG_BADGE05_GET                                              0x51C
+#define FLAG_BADGE06_GET                                              0x51D
+#define FLAG_BADGE07_GET                                              0x51E
+#define FLAG_BADGE08_GET                                              0x51F
+
+// Kanto Visit Flags
+#define FLAG_VISITED_PEWTER_CITY                                     0x520
+#define FLAG_VISITED_CERULEAN_CITY                                   0x521
+#define FLAG_VISITED_VERMILION_CITY                                  0x522
+#define FLAG_VISITED_CELADON_CITY                                    0x523
+#define FLAG_VISITED_FUCHSIA_CITY                                    0x524
+#define FLAG_VISITED_SAFFRON_CITY                                    0x525
+#define FLAG_VISITED_CINNABAR_ISLAND                                 0x526
+#define FLAG_VISITED_VIRIDIAN_CITY                                   0x527
+
+// Kanto Story Event Flags
+#define FLAG_DEFEATED_PROFESSOR_OAK                                  0x528
+#define FLAG_DEFEATED_GIOVANNI_ROCKET                                0x529
+#define FLAG_DEFEATED_MR_FUJI                                        0x52A
+#define FLAG_DEFEATED_SILPH_PRESIDENT                                0x52B
+#define FLAG_DEFEATED_SS_ANNE_CAPTAIN                                0x52C
+#define FLAG_DEFEATED_MANSION_CARETAKER                              0x52D
+#define FLAG_SILPH_CO_TAKEOVER_COMPLETE                              0x52E
+#define FLAG_POKEMON_TOWER_CLEARED                                   0x52F
+
+// Kanto Elite Four Defeat Flags
+#define FLAG_DEFEATED_KANTO_ELITE_4_LORELEI                          0x530
+#define FLAG_DEFEATED_KANTO_ELITE_4_BRUNO                            0x531
+#define FLAG_DEFEATED_KANTO_ELITE_4_AGATHA                           0x532
+#define FLAG_DEFEATED_KANTO_ELITE_4_LANCE                            0x533
+#define FLAG_KANTO_ELITE_4_DEFEATED                                  0x534
+#define FLAG_DEFEATED_KANTO_CHAMPION_BLUE                            0x535
+
+// Inter-Region Travel Flags
+#define FLAG_FERRY_UNLOCKED                                          0x536
+#define FLAG_WARP_TRUCK_UNLOCKED                                     0x537
+
+// Kanto Generic Trainer Defeat Flags - Route Trainers
+#define FLAG_DEFEATED_ROUTE1_YOUNGSTER_1                             0x538
+#define FLAG_DEFEATED_ROUTE1_LASS_1                                  0x539
+#define FLAG_DEFEATED_ROUTE2_BUG_CATCHER_1                           0x53A
+#define FLAG_DEFEATED_ROUTE2_YOUNGSTER_1                             0x53B
+#define FLAG_DEFEATED_ROUTE3_YOUNGSTER_1                             0x53C
+#define FLAG_DEFEATED_ROUTE3_LASS_1                                  0x53D
+#define FLAG_DEFEATED_ROUTE3_BUG_CATCHER_1                           0x53E
+#define FLAG_DEFEATED_ROUTE4_HIKER_1                                 0x53F
+#define FLAG_DEFEATED_ROUTE4_YOUNGSTER_1                             0x540
+#define FLAG_DEFEATED_ROUTE5_LASS_1                                  0x541
+#define FLAG_DEFEATED_ROUTE5_YOUNGSTER_1                             0x542
+#define FLAG_DEFEATED_ROUTE6_BUG_CATCHER_1                           0x543
+#define FLAG_DEFEATED_ROUTE6_LASS_1                                  0x544
+#define FLAG_DEFEATED_ROUTE7_YOUNGSTER_1                             0x545
+#define FLAG_DEFEATED_ROUTE7_LASS_1                                  0x546
+#define FLAG_DEFEATED_ROUTE8_GAMBLER_1                               0x547
+#define FLAG_DEFEATED_ROUTE8_SUPER_NERD_1                            0x548
+#define FLAG_DEFEATED_ROUTE9_HIKER_1                                 0x549
+#define FLAG_DEFEATED_ROUTE9_YOUNGSTER_1                             0x54A
+#define FLAG_DEFEATED_ROUTE10_HIKER_1                                0x54B
+#define FLAG_DEFEATED_ROUTE10_ROCKER_1                               0x54C
+#define FLAG_DEFEATED_ROUTE11_YOUNGSTER_1                            0x54D
+#define FLAG_DEFEATED_ROUTE11_ENGINEER_1                             0x54E
+#define FLAG_DEFEATED_ROUTE12_FISHERMAN_1                            0x54F
+#define FLAG_DEFEATED_ROUTE12_ROCKER_1                               0x550
+#define FLAG_DEFEATED_ROUTE13_BEAUTY_1                               0x551
+#define FLAG_DEFEATED_ROUTE13_BIRD_KEEPER_1                          0x552
+#define FLAG_DEFEATED_ROUTE14_BIRD_KEEPER_1                          0x553
+#define FLAG_DEFEATED_ROUTE14_BEAUTY_1                               0x554
+#define FLAG_DEFEATED_ROUTE15_BIRD_KEEPER_1                          0x555
+#define FLAG_DEFEATED_ROUTE15_BEAUTY_1                               0x556
+#define FLAG_DEFEATED_ROUTE16_BIKER_1                                0x557
+#define FLAG_DEFEATED_ROUTE16_CUE_BALL_1                             0x558
+#define FLAG_DEFEATED_ROUTE17_BIKER_1                                0x559
+#define FLAG_DEFEATED_ROUTE17_CUE_BALL_1                             0x55A
+#define FLAG_DEFEATED_ROUTE18_BIRD_KEEPER_1                          0x55B
+#define FLAG_DEFEATED_ROUTE18_BIKER_1                                0x55C
+#define FLAG_DEFEATED_ROUTE19_SWIMMER_M_1                            0x55D
+#define FLAG_DEFEATED_ROUTE19_SWIMMER_F_1                            0x55E
+#define FLAG_DEFEATED_ROUTE20_SWIMMER_M_1                            0x55F
+#define FLAG_DEFEATED_ROUTE20_SWIMMER_F_1                            0x560
+#define FLAG_DEFEATED_ROUTE21_FISHERMAN_1                            0x561
+#define FLAG_DEFEATED_ROUTE21_SWIMMER_M_1                            0x562
+#define FLAG_DEFEATED_ROUTE22_YOUNGSTER_1                            0x563
+#define FLAG_DEFEATED_ROUTE22_BUG_CATCHER_1                          0x564
+#define FLAG_DEFEATED_ROUTE23_COOLTRAINER_M_1                        0x565
+#define FLAG_DEFEATED_ROUTE23_COOLTRAINER_F_1                        0x566
+#define FLAG_DEFEATED_ROUTE24_YOUNGSTER_1                            0x567
+#define FLAG_DEFEATED_ROUTE24_LASS_1                                 0x568
+#define FLAG_DEFEATED_ROUTE25_YOUNGSTER_1                            0x569
+#define FLAG_DEFEATED_ROUTE25_LASS_1                                 0x56A
+
+// Kanto Generic Trainer Defeat Flags - Cave Trainers
+#define FLAG_DEFEATED_VIRIDIAN_FOREST_BUG_CATCHER_1                  0x56B
+#define FLAG_DEFEATED_VIRIDIAN_FOREST_BUG_CATCHER_2                  0x56C
+#define FLAG_DEFEATED_MT_MOON_SUPER_NERD_1                           0x56D
+#define FLAG_DEFEATED_MT_MOON_HIKER_1                                0x56E
+#define FLAG_DEFEATED_MT_MOON_BUG_CATCHER_1                          0x56F
+#define FLAG_DEFEATED_ROCK_TUNNEL_HIKER_1                            0x570
+#define FLAG_DEFEATED_ROCK_TUNNEL_PICNICKER_1                        0x571
+#define FLAG_DEFEATED_DIGLETTS_CAVE_HIKER_1                          0x572
+#define FLAG_DEFEATED_SEAFOAM_ISLANDS_SWIMMER_M_1                    0x573
+#define FLAG_DEFEATED_SEAFOAM_ISLANDS_SWIMMER_F_1                    0x574
+#define FLAG_DEFEATED_VICTORY_ROAD_COOLTRAINER_M_1                   0x575
+#define FLAG_DEFEATED_VICTORY_ROAD_COOLTRAINER_F_1                   0x576
+#define FLAG_DEFEATED_VICTORY_ROAD_JUGGLER_1                         0x577
+
+// Kanto Generic Trainer Defeat Flags - Building Trainers
+#define FLAG_DEFEATED_POKEMON_TOWER_CHANNELER_1                      0x578
+#define FLAG_DEFEATED_POKEMON_TOWER_CHANNELER_2                      0x579
+#define FLAG_DEFEATED_POKEMON_TOWER_CHANNELER_3                      0x57A
+#define FLAG_DEFEATED_SILPH_CO_SCIENTIST_1                           0x57B
+#define FLAG_DEFEATED_SILPH_CO_SCIENTIST_2                           0x57C
+#define FLAG_DEFEATED_SILPH_CO_ROCKET_GRUNT_1                        0x57D
+#define FLAG_DEFEATED_SILPH_CO_ROCKET_GRUNT_2                        0x57E
+#define FLAG_DEFEATED_ROCKET_HIDEOUT_ROCKET_GRUNT_1                  0x57F
+#define FLAG_DEFEATED_ROCKET_HIDEOUT_ROCKET_GRUNT_2                  0x580
+#define FLAG_DEFEATED_ROCKET_HIDEOUT_ROCKET_GRUNT_3                  0x581
+#define FLAG_DEFEATED_GAME_CORNER_GAMBLER_1                          0x582
+#define FLAG_DEFEATED_GAME_CORNER_ROCKET_GRUNT_1                     0x583
+#define FLAG_DEFEATED_POKEMON_MANSION_SCIENTIST_1                    0x584
+#define FLAG_DEFEATED_POKEMON_MANSION_SCIENTIST_2                    0x585
+#define FLAG_DEFEATED_POWER_PLANT_ENGINEER_1                         0x586
+#define FLAG_DEFEATED_POWER_PLANT_ENGINEER_2                         0x587
+
+// Kanto Generic Trainer Defeat Flags - Special Locations
+#define FLAG_DEFEATED_SS_ANNE_GENTLEMAN_1                            0x588
+#define FLAG_DEFEATED_SS_ANNE_SAILOR_1                               0x589
+#define FLAG_DEFEATED_SAFARI_ZONE_RANGER_1                           0x58A
+#define FLAG_DEFEATED_SAFARI_ZONE_RANGER_2                           0x58B
 
 #define FLAG_UNUSED_0x4FF                                           0x4FF // Unused Flag
 

@@ -1102,6 +1102,30 @@ static bool8 UNUSED GetInWildMonRoom(void)
     return sInWildMonRoom;
 }
 
+static u8 CalculateDynamicPikeLevel(u8 baseLevel)
+{
+    u8 highestPlayerLevel = 0;
+    s32 i;
+
+    // Find the highest level in the player's party
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL)
+            && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_EGG)
+        {
+            s32 level = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL, NULL);
+            if (level > highestPlayerLevel)
+                highestPlayerLevel = level;
+        }
+    }
+
+    // Return highest player level + 5, capped at MAX_LEVEL
+    if (highestPlayerLevel + 5 > MAX_LEVEL)
+        return MAX_LEVEL;
+    else
+        return highestPlayerLevel + 5;
+}
+
 bool32 TryGenerateBattlePikeWildMon(bool8 checkKeenEyeIntimidate)
 {
     s32 i;
@@ -1113,24 +1137,8 @@ bool32 TryGenerateBattlePikeWildMon(bool8 checkKeenEyeIntimidate)
     s32 pikeMonId = GetMonData(&gEnemyParty[0], MON_DATA_SPECIES, NULL);
     pikeMonId = SpeciesToPikeMonId(pikeMonId);
 
-    if (gSaveBlock2Ptr->frontier.lvlMode != FRONTIER_LVL_50)
-    {
-        monLevel = GetHighestLevelInPlayerParty();
-        if (monLevel < FRONTIER_MIN_LEVEL_OPEN)
-        {
-            monLevel = FRONTIER_MIN_LEVEL_OPEN;
-        }
-        else
-        {
-            monLevel -= wildMons[headerId][pikeMonId].levelDelta;
-            if (monLevel < FRONTIER_MIN_LEVEL_OPEN)
-                monLevel = FRONTIER_MIN_LEVEL_OPEN;
-        }
-    }
-    else
-    {
-        monLevel = FRONTIER_MAX_LEVEL_50 - wildMons[headerId][pikeMonId].levelDelta;
-    }
+    // Use dynamic level calculation instead of the original logic
+    monLevel = CalculateDynamicPikeLevel(wildMons[headerId][pikeMonId].levelDelta);
 
     if (checkKeenEyeIntimidate == TRUE && !CanEncounterWildMon(monLevel))
         return FALSE;

@@ -1957,6 +1957,62 @@ static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite)
     }
 }
 
+static u8 CalculateDynamicOpponentLevel(void)
+{
+    u8 highestPlayerLevel = 0;
+    s32 i;
+    u8 levelOffset = 3; // Default offset for general trainers
+
+    // Find the highest level in the player's party
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL)
+            && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_EGG)
+        {
+            s32 level = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL, NULL);
+            if (level > highestPlayerLevel)
+                highestPlayerLevel = level;
+        }
+    }
+
+    // Determine level offset based on trainer class
+    if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && !(gBattleTypeFlags & (BATTLE_TYPE_FRONTIER
+                                                                        | BATTLE_TYPE_EREADER_TRAINER
+                                                                        | BATTLE_TYPE_TRAINER_HILL)))
+    {
+        // Check trainer class for level scaling
+        switch (gTrainers[gTrainerBattleOpponent_A].trainerClass)
+        {
+        case TRAINER_CLASS_LEADER:
+            levelOffset = 5; // Gym Leaders: 5 levels higher
+            break;
+        case TRAINER_CLASS_ELITE_FOUR:
+            levelOffset = 7; // Elite Four: 7 levels higher
+            break;
+        case TRAINER_CLASS_CHAMPION:
+            levelOffset = 10; // Champion: 10 levels higher
+            break;
+        case TRAINER_CLASS_RIVAL:
+        case TRAINER_CLASS_RIVAL_EARLY:
+        case TRAINER_CLASS_RIVAL_LATE:
+            levelOffset = 5; // Rivals (Gary, May, Wally, etc.): 5 levels higher
+            break;
+        case TRAINER_CLASS_SPECIAL:
+            levelOffset = 15; // Special trainers (Steven, etc.): 15 levels higher
+            break;
+        default:
+            levelOffset = 3; // General trainers: 3 levels higher
+            break;
+        }
+    }
+
+    // Calculate final level and cap at MAX_LEVEL
+    if (highestPlayerLevel + levelOffset > MAX_LEVEL)
+        return MAX_LEVEL;
+    else
+        return highestPlayerLevel + levelOffset;
+}
+
 static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 firstTrainer)
 {
     u32 nameHash = 0;
@@ -1964,6 +2020,7 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
     u8 fixedIV;
     s32 i, j;
     u8 monsCount;
+    u8 dynamicLevel;
 
     if (trainerNum == TRAINER_SECRET_BASE)
         return 0;
@@ -1986,6 +2043,9 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
         {
             monsCount = gTrainers[trainerNum].partySize;
         }
+
+        // Calculate dynamic level based on player's highest level Pokémon + 5
+        dynamicLevel = CalculateDynamicOpponentLevel();
 
         for (i = 0; i < monsCount; i++)
         {
@@ -2011,7 +2071,7 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
 
                 personalityValue += nameHash << 8;
                 fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
-                CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
+                CreateMon(&party[i], partyData[i].species, dynamicLevel, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
                 break;
             }
             case F_TRAINER_PARTY_CUSTOM_MOVESET:
@@ -2023,7 +2083,7 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
 
                 personalityValue += nameHash << 8;
                 fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
-                CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
+                CreateMon(&party[i], partyData[i].species, dynamicLevel, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
 
                 for (j = 0; j < MAX_MON_MOVES; j++)
                 {
@@ -2041,7 +2101,7 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
 
                 personalityValue += nameHash << 8;
                 fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
-                CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
+                CreateMon(&party[i], partyData[i].species, dynamicLevel, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
 
                 SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[i].heldItem);
                 break;
@@ -2055,7 +2115,7 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
 
                 personalityValue += nameHash << 8;
                 fixedIV = partyData[i].iv * MAX_PER_STAT_IVS / 255;
-                CreateMon(&party[i], partyData[i].species, partyData[i].lvl, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
+                CreateMon(&party[i], partyData[i].species, dynamicLevel, fixedIV, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
 
                 SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[i].heldItem);
 

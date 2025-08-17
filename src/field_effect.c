@@ -31,6 +31,7 @@
 #include "constants/metatile_behaviors.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "hm_region_check.h"
 
 #define subsprite_table(ptr) {.subsprites = ptr, .subspriteCount = (sizeof ptr) / (sizeof(struct Subsprite))}
 
@@ -3162,6 +3163,14 @@ static void SpriteCB_NPCFlyOut(struct Sprite *sprite)
 
 u8 FldEff_UseFly(void)
 {
+    // Check if Fly can be used in current region
+    if (!CanUseHM02Fly())
+    {
+        // Show region restriction message
+        ScriptContext_SetupScript(EventScript_FlyRegionRestricted);
+        return 0;
+    }
+    
     u8 taskId = CreateTask(Task_FlyOut, 254);
     gTasks[taskId].tMonId = gFieldEffectArguments[0];
     return 0;

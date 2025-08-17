@@ -81,15 +81,41 @@ void ClearRoamerLocationData(void)
     sRoamerLocation[MAP_NUM] = 0;
 }
 
+static u8 CalculateDynamicRoamerLevel(void)
+{
+    u8 highestPlayerLevel = 0;
+    s32 i;
+
+    // Find the highest level in the player's party
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL)
+            && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_EGG)
+        {
+            s32 level = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL, NULL);
+            if (level > highestPlayerLevel)
+                highestPlayerLevel = level;
+        }
+    }
+
+    // Roamers are special event Pokémon, so use highest player level + 5
+    if (highestPlayerLevel + 5 > MAX_LEVEL)
+        return MAX_LEVEL;
+    else
+        return highestPlayerLevel + 5;
+}
+
 static void CreateInitialRoamerMon(bool16 createLatios)
 {
+    u8 dynamicLevel = CalculateDynamicRoamerLevel();
+    
     if (!createLatios)
         ROAMER->species = SPECIES_LATIAS;
     else
         ROAMER->species = SPECIES_LATIOS;
 
-    CreateMon(&gEnemyParty[0], ROAMER->species, 40, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
-    ROAMER->level = 40;
+    CreateMon(&gEnemyParty[0], ROAMER->species, dynamicLevel, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
+    ROAMER->level = dynamicLevel;
     ROAMER->status = 0;
     ROAMER->active = TRUE;
     ROAMER->ivs = GetMonData(&gEnemyParty[0], MON_DATA_IVS);

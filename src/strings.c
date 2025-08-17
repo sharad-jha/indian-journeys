@@ -1819,3 +1819,7 @@ const u8 gText_Answer[] = _("ANSWER");
 const u8 gText_PokeBalls[] = _("POKé BALLS");
 const u8 gText_Berry[] = _("BERRY");
 const u8 gText_Berries[] = _("BERRIES");
+
+// HM Region Restriction Messages
+const u8 gText_HMNotUsableInKanto[] = _("This HM was obtained in another\nregion and cannot be used here.\pYou need to obtain it locally\nin Kanto to use it in this region.");
+const u8 gText_HMNotUsableInHoenn[] = _("This HM was obtained in another\nregion and cannot be used here.\pYou need to obtain it locally\nin Hoenn to use it in this region.");

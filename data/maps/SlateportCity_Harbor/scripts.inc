@@ -538,3 +538,59 @@ SlateportCity_Harbor_Text_HandedScannerToStern:
 SlateportCity_Harbor_Text_ThisWillHelpResearch:
 	.string "CAPT. STERN: Thanks, {PLAYER}{KUN}!\n"
 	.string "This will help our research a lot!$"
+
+@ Inter-Region Ferry System
+SlateportCity_Harbor_EventScript_KantoFerryAttendant::
+	lock
+	faceplayer
+	goto_if_unset FLAG_FERRY_UNLOCKED, SlateportCity_Harbor_EventScript_FerryLocked
+	msgbox SlateportCity_Harbor_Text_WelcomeToKantoFerry, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SlateportCity_Harbor_EventScript_DeclineFerry
+	msgbox SlateportCity_Harbor_Text_BoardingKantoFerry, MSGBOX_DEFAULT
+	closemessage
+	call SlateportCity_Harbor_EventScript_BoardKantoFerry
+	warp MAP_SS_ANNE_DECK, 15, 25
+	waitstate
+	release
+	end
+
+SlateportCity_Harbor_EventScript_FerryLocked::
+	msgbox SlateportCity_Harbor_Text_FerryCurrentlyUnavailable, MSGBOX_DEFAULT
+	release
+	end
+
+SlateportCity_Harbor_EventScript_DeclineFerry::
+	msgbox SlateportCity_Harbor_Text_ComeBackAnytime, MSGBOX_DEFAULT
+	release
+	end
+
+SlateportCity_Harbor_EventScript_BoardKantoFerry::
+	applymovement LOCALID_PLAYER, SlateportCity_Harbor_Movement_BoardFerry
+	waitmovement 0
+	return
+
+SlateportCity_Harbor_Movement_BoardFerry:
+	walk_right
+	walk_right
+	walk_up
+	step_end
+
+SlateportCity_Harbor_Text_WelcomeToKantoFerry:
+	.string "CAPTAIN: Welcome to the Kanto Ferry!\n"
+	.string "Would you like to sail to the Kanto\l"
+	.string "region? It's quite a journey!$"
+
+SlateportCity_Harbor_Text_BoardingKantoFerry:
+	.string "CAPTAIN: All aboard! Next stop,\n"
+	.string "the S.S. Anne in Kanto!$"
+
+SlateportCity_Harbor_Text_FerryCurrentlyUnavailable:
+	.string "CAPTAIN: I'm sorry, but the Kanto\n"
+	.string "Ferry service is currently unavailable.\p"
+	.string "This route only opens to trainers who\n"
+	.string "have proven themselves by defeating\l"
+	.string "both the Hoenn and Kanto Elite Four!$"
+
+SlateportCity_Harbor_Text_ComeBackAnytime:
+	.string "CAPTAIN: Come back anytime when\n"
+	.string "you're ready to sail to Kanto!$"

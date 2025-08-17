@@ -1340,6 +1340,30 @@ static void MarkPyramidTrainerAsBattled(u16 trainerId)
     gObjectEvents[gSelectedObjectEvent].initialCoords.y = gObjectEvents[gSelectedObjectEvent].currentCoords.y;
 }
 
+static u8 CalculateDynamicPyramidLevel(u8 baseLevel)
+{
+    u8 highestPlayerLevel = 0;
+    s32 i;
+
+    // Find the highest level in the player's party
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL)
+            && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_EGG)
+        {
+            s32 level = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL, NULL);
+            if (level > highestPlayerLevel)
+                highestPlayerLevel = level;
+        }
+    }
+
+    // Return highest player level + 5, capped at MAX_LEVEL
+    if (highestPlayerLevel + 5 > MAX_LEVEL)
+        return MAX_LEVEL;
+    else
+        return highestPlayerLevel + 5;
+}
+
 void GenerateBattlePyramidWildMon(void)
 {
     u8 name[POKEMON_NAME_LENGTH + 1];
@@ -1361,16 +1385,9 @@ void GenerateBattlePyramidWildMon(void)
     SetMonData(&gEnemyParty[0], MON_DATA_SPECIES, &wildMons[id].species);
     GetSpeciesName(name, wildMons[id].species);
     SetMonData(&gEnemyParty[0], MON_DATA_NICKNAME, &name);
-    if (lvl != FRONTIER_LVL_50)
-    {
-        lvl = SetFacilityPtrsGetLevel();
-        lvl -= wildMons[id].lvl;
-        lvl = lvl - 5 + (Random() % 11);
-    }
-    else
-    {
-        lvl = wildMons[id].lvl - 5 + ((Random() % 11));
-    }
+    
+    // Use dynamic level calculation instead of the original logic
+    lvl = CalculateDynamicPyramidLevel(wildMons[id].lvl);
     SetMonData(&gEnemyParty[0],
                MON_DATA_EXP,
                &gExperienceTables[gSpeciesInfo[wildMons[id].species].growthRate][lvl]);
