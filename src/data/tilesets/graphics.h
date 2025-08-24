@@ -1,6 +1,30 @@
 const u32 gTilesetTiles_Petalburg[] = INCBIN_U32("data/tilesets/secondary/petalburg/tiles.4bpp.lz");
 
+const u32 gTilesetTiles_PewterCity[] = INCBIN_U32("data/tilesets/secondary/pewter_city/tiles.4bpp.lz");
+
+
 const u16 gTilesetPalettes_Petalburg[][16] =
+
+const u16 gTilesetPalettes_PewterCity[][16] =
+{
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/00.pal"),
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/01.pal"),
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/02.pal"),
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/03.pal"),
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/04.pal"),
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/05.pal"),
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/06.pal"),
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/07.pal"),
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/08.pal"),
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/09.pal"),
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/10.pal"),
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/11.pal"),
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/12.pal"),
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/13.pal"),
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/14.pal"),
+    INCBIN_U16("data/tilesets/secondary/pewter_city/palettes/15.pal"),
+};
+
 {
 	INCBIN_U16("data/tilesets/secondary/petalburg/palettes/00.gbapal"),
 	INCBIN_U16("data/tilesets/secondary/petalburg/palettes/01.gbapal"),

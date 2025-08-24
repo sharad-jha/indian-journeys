@@ -116,12 +116,32 @@ static void CB_FadeInFlyMap(void);
 static void CB_HandleFlyMapInput(void);
 static void CB_ExitFlyMap(void);
 
+// Region detection function
+static bool8 IsPlayerInKantoRegion(void)
+{
+    return (gSaveBlock1Ptr->location.mapGroup == 8); // Kanto map group
+}
+
 static const u16 sRegionMapCursorPal[] = INCBIN_U16("graphics/pokenav/region_map/cursor.gbapal");
 static const u32 sRegionMapCursorSmallGfxLZ[] = INCBIN_U32("graphics/pokenav/region_map/cursor_small.4bpp.lz");
 static const u32 sRegionMapCursorLargeGfxLZ[] = INCBIN_U32("graphics/pokenav/region_map/cursor_large.4bpp.lz");
+
+// Region map graphics - currently using Hoenn graphics for both regions
+// TODO: Add actual Kanto region map graphics when file conversion is implemented
+static const u16 sRegionMapBg_Pal_Hoenn[] = INCBIN_U16("graphics/pokenav/region_map/map.gbapal");
+static const u32 sRegionMapBg_GfxLZ_Hoenn[] = INCBIN_U32("graphics/pokenav/region_map/map.8bpp.lz");
+static const u32 sRegionMapBg_TilemapLZ_Hoenn[] = INCBIN_U32("graphics/pokenav/region_map/map.bin.lz");
+
+// Kanto region map graphics - temporarily using Hoenn graphics
+static const u16 sRegionMapBg_Pal_Kanto[] = INCBIN_U16("graphics/pokenav/region_map/map.gbapal");
+static const u32 sRegionMapBg_GfxLZ_Kanto[] = INCBIN_U32("graphics/pokenav/region_map/map.8bpp.lz");
+static const u32 sRegionMapBg_TilemapLZ_Kanto[] = INCBIN_U32("graphics/pokenav/region_map/map.bin.lz");
+
+// Legacy support - keep original names for compatibility
 static const u16 sRegionMapBg_Pal[] = INCBIN_U16("graphics/pokenav/region_map/map.gbapal");
 static const u32 sRegionMapBg_GfxLZ[] = INCBIN_U32("graphics/pokenav/region_map/map.8bpp.lz");
 static const u32 sRegionMapBg_TilemapLZ[] = INCBIN_U32("graphics/pokenav/region_map/map.bin.lz");
+
 static const u16 sRegionMapPlayerIcon_BrendanPal[] = INCBIN_U16("graphics/pokenav/region_map/brendan_icon.gbapal");
 static const u8 sRegionMapPlayerIcon_BrendanGfx[] = INCBIN_U8("graphics/pokenav/region_map/brendan_icon.4bpp");
 static const u16 sRegionMapPlayerIcon_MayPal[] = INCBIN_U16("graphics/pokenav/region_map/may_icon.gbapal");
@@ -547,24 +567,47 @@ bool8 LoadRegionMapGfx(void)
     {
     case 0:
         if (sRegionMap->bgManaged)
-            DecompressAndCopyTileDataToVram(sRegionMap->bgNum, sRegionMapBg_GfxLZ, 0, 0, 0);
+        {
+            if (IsPlayerInKantoRegion())
+                DecompressAndCopyTileDataToVram(sRegionMap->bgNum, sRegionMapBg_GfxLZ_Kanto, 0, 0, 0);
+            else
+                DecompressAndCopyTileDataToVram(sRegionMap->bgNum, sRegionMapBg_GfxLZ_Hoenn, 0, 0, 0);
+        }
         else
-            LZ77UnCompVram(sRegionMapBg_GfxLZ, (u16 *)BG_CHAR_ADDR(2));
+        {
+            if (IsPlayerInKantoRegion())
+                LZ77UnCompVram(sRegionMapBg_GfxLZ_Kanto, (u16 *)BG_CHAR_ADDR(2));
+            else
+                LZ77UnCompVram(sRegionMapBg_GfxLZ_Hoenn, (u16 *)BG_CHAR_ADDR(2));
+        }
         break;
     case 1:
         if (sRegionMap->bgManaged)
         {
             if (!FreeTempTileDataBuffersIfPossible())
-                DecompressAndCopyTileDataToVram(sRegionMap->bgNum, sRegionMapBg_TilemapLZ, 0, 0, 1);
+            {
+                if (IsPlayerInKantoRegion())
+                    DecompressAndCopyTileDataToVram(sRegionMap->bgNum, sRegionMapBg_TilemapLZ_Kanto, 0, 0, 1);
+                else
+                    DecompressAndCopyTileDataToVram(sRegionMap->bgNum, sRegionMapBg_TilemapLZ_Hoenn, 0, 0, 1);
+            }
         }
         else
         {
-            LZ77UnCompVram(sRegionMapBg_TilemapLZ, (u16 *)BG_SCREEN_ADDR(28));
+            if (IsPlayerInKantoRegion())
+                LZ77UnCompVram(sRegionMapBg_TilemapLZ_Kanto, (u16 *)BG_SCREEN_ADDR(28));
+            else
+                LZ77UnCompVram(sRegionMapBg_TilemapLZ_Hoenn, (u16 *)BG_SCREEN_ADDR(28));
         }
         break;
     case 2:
         if (!FreeTempTileDataBuffersIfPossible())
-            LoadPalette(sRegionMapBg_Pal, BG_PLTT_ID(7), 3 * PLTT_SIZE_4BPP);
+        {
+            if (IsPlayerInKantoRegion())
+                LoadPalette(sRegionMapBg_Pal_Kanto, BG_PLTT_ID(7), 3 * PLTT_SIZE_4BPP);
+            else
+                LoadPalette(sRegionMapBg_Pal_Hoenn, BG_PLTT_ID(7), 3 * PLTT_SIZE_4BPP);
+        }
         break;
     case 3:
         LZ77UnCompWram(sRegionMapCursorSmallGfxLZ, sRegionMap->cursorSmallImage);

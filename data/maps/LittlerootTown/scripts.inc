@@ -46,7 +46,19 @@ LittlerootTown_OnTransition:
 	call_if_eq VAR_LITTLEROOT_RIVAL_STATE, 3, LittlerootTown_EventScript_SetRivalLeftForRoute103
 	call_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 1, LittlerootTown_EventScript_HideMapNamePopup
 	call_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, LittlerootTown_EventScript_LeftLabAfterDexUpgrade
+	call LittlerootTown_EventScript_CheckKantoTruckVisibility
 	end
+
+LittlerootTown_EventScript_CheckKantoTruckVisibility::
+	@ Show Kanto truck after initial sequence is complete
+	goto_if_lt VAR_LITTLEROOT_INTRO_STATE, 3, LittlerootTown_EventScript_HideKantoTruck
+	goto_if_lt VAR_LITTLEROOT_TOWN_STATE, 4, LittlerootTown_EventScript_HideKantoTruck
+	clearflag FLAG_HIDE_LITTLEROOT_TOWN_KANTO_TRUCK
+	return
+
+LittlerootTown_EventScript_HideKantoTruck::
+	setflag FLAG_HIDE_LITTLEROOT_TOWN_KANTO_TRUCK
+	return
 
 LittlerootTown_EventScript_LeftLabAfterDexUpgrade::
 	setvar VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 3

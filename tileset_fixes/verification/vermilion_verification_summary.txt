@@ -1,0 +1,13 @@
+=== VERMILION CITY FIX VERIFICATION === 
+Generated: 22-08-2025  3:10:33.27 
+======================================== 
+ 
+✓ LAYOUT_VERMILION_CITY uses gTileset_VermilionCity 
+✓ LAYOUT_VERMILION_CITY no longer uses gTileset_Petalburg 
+✓ Vermilion City tiles.png exists 
+✓ Vermilion City metatiles.bin exists 
+✓ Vermilion City palettes directory exists 
+ 
+Palette files found: 16 
+ 
+NEXT STEP: If verification passes, execute step3_fix_celadon_city.bat 

@@ -1,3 +1,6 @@
+// Original gTileset_General - NO LONGER USED
+// Replaced by gTileset_General_Kanto and gTileset_General_Hoenn for region-specific tilesets
+/*
 const struct Tileset gTileset_General =
 {
     .isCompressed = TRUE,
@@ -8,8 +11,43 @@ const struct Tileset gTileset_General =
     .metatileAttributes = gMetatileAttributes_General,
     .callback = InitTilesetAnim_General,
 };
+*/
+
+const struct Tileset gTileset_General_Kanto =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_General_Kanto,
+    .palettes = gTilesetPalettes_General_Kanto,
+    .metatiles = gMetatiles_General_Kanto,
+    .metatileAttributes = gMetatileAttributes_General_Kanto,
+    .callback = InitTilesetAnim_General_Kanto,
+};
+
+const struct Tileset gTileset_General_Hoenn =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_General_Hoenn,
+    .palettes = gTilesetPalettes_General_Hoenn,
+    .metatiles = gMetatiles_General_Hoenn,
+    .metatileAttributes = gMetatileAttributes_General_Hoenn,
+    .callback = InitTilesetAnim_General_Hoenn,
+};
 
 const struct Tileset gTileset_Petalburg =
+
+const struct Tileset gTileset_PewterCity =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_PewterCity,
+    .palettes = gTilesetPalettes_PewterCity,
+    .metatiles = gMetatiles_PewterCity,
+    .metatileAttributes = gMetatileAttributes_PewterCity,
+    .callback = NULL,
+};
+
 {
     .isCompressed = TRUE,
     .isSecondary = TRUE,

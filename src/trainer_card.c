@@ -91,6 +91,101 @@ struct TrainerCardData
     u8 language;
 };
 
+// Add region detection functions
+static bool8 IsPlayerInKantoRegion(void)
+{
+    // Check if current map is in Kanto map group
+    // Kanto is map group 8 (gMapGroup_Kanto)
+    return (gSaveBlock1Ptr->location.mapGroup == 8);
+}
+
+// Check if player is currently in Johto region (future implementation)
+static bool8 IsPlayerInJohtoRegion(void)
+{
+    // Check if current map is in Johto map group
+    // Johto will be map group 9 (gMapGroup_Johto) when implemented
+    // For now, return FALSE as Johto is not yet implemented
+    return (gSaveBlock1Ptr->location.mapGroup == 9);
+}
+
+// Get the current region-based card type (dynamic switching)
+static u8 GetCurrentRegionCardType(void)
+{
+    if (IsPlayerInKantoRegion())
+    {
+        return CARD_TYPE_FRLG;  // Kanto style
+    }
+    else if (IsPlayerInJohtoRegion())
+    {
+        return CARD_TYPE_FRLG;  // Johto style (using Kanto card style for now)
+    }
+    else
+    {
+        return CARD_TYPE_EMERALD;  // Hoenn style
+    }
+}
+
+// Check if player has caught all Kanto Pokémon (placeholder)
+static bool8 HasAllKantoMons(void)
+{
+    // This is a placeholder - you will need to implement Kanto Pokémon tracking
+    // For now, return FALSE to indicate incomplete Kanto Pokédex
+    return FALSE;
+}
+
+// Check if player has caught all Johto Pokémon (placeholder for future)
+static bool8 HasAllJohtoMons(void)
+{
+    // This is a placeholder for when Johto region is implemented
+    // For now, return FALSE to indicate incomplete Johto Pokédex
+    return FALSE;
+}
+
+// Count Kanto badges obtained (placeholder)
+static u8 CountKantoBadges(void)
+{
+    u8 badgeCount = 0;
+    u8 i;
+    
+    // Check Kanto badge flags (you will need to define these)
+    // For now, we will use the existing badge flags as a placeholder
+    for (i = 0; i < NUM_BADGES; i++)
+    {
+        if (FlagGet(FLAG_BADGE01_GET + i))
+            badgeCount++;
+    }
+    
+    return badgeCount;
+}
+
+// Count Johto badges obtained (placeholder for future)
+static u8 CountJohtoBadges(void)
+{
+    u8 badgeCount = 0;
+    u8 i;
+    
+    // Check Johto badge flags (you will need to define these when Johto is implemented)
+    // For now, return 0 as Johto is not yet implemented
+    return 0;
+}
+
+// Count Hoenn badges obtained (placeholder)
+static u8 CountHoennBadges(void)
+{
+    u8 badgeCount = 0;
+    u8 i;
+    
+    // Check Hoenn badge flags (you will need to define these)
+    // For now, we will use the existing badge flags as a placeholder
+    for (i = 0; i < NUM_BADGES; i++)
+    {
+        if (FlagGet(FLAG_BADGE01_GET + i))
+            badgeCount++;
+    }
+    
+    return badgeCount;
+}
+
 // EWRAM
 EWRAM_DATA struct TrainerCard gTrainerCards[4] = {0};
 EWRAM_DATA static struct TrainerCardData *sData = NULL;
@@ -716,8 +811,18 @@ static void SetPlayerCardData(struct TrainerCard *trainerCard, u8 cardType)
     }
 
     trainerCard->hasPokedex = FlagGet(FLAG_SYS_POKEDEX_GET);
-    trainerCard->caughtAllHoenn = HasAllHoennMons();
-    trainerCard->caughtMonsCount = GetCaughtMonsCount();
+    
+    // Set region-specific completion data based on current location
+    if (IsPlayerInKantoRegion())
+    {
+        trainerCard->caughtAllHoenn = HasAllKantoMons();  // Use Kanto completion for Kanto region
+        trainerCard->caughtMonsCount = GetCaughtMonsCount();  // This will need to be region-specific
+    }
+    else
+    {
+        trainerCard->caughtAllHoenn = HasAllHoennMons();  // Use Hoenn completion for Hoenn region
+        trainerCard->caughtMonsCount = GetCaughtMonsCount();
+    }
 
     trainerCard->trainerId = (gSaveBlock2Ptr->playerTrainerId[1] << 8) | gSaveBlock2Ptr->playerTrainerId[0];
 
@@ -1503,20 +1608,30 @@ static void DrawStarsAndBadgesOnCard(void)
     s16 i, x;
     u16 tileNum = 192;
     u8 palNum = 3;
+    u8 badgeCount = 0;
 
     FillBgTilemapBufferRect(3, 143, 15, yOffsets[sData->isHoenn], sData->trainerCard.stars, 1, 4);
     if (!sData->isLink)
     {
         x = 4;
-        for (i = 0; i < NUM_BADGES; i++, tileNum += 2, x += 3)
+        
+        // Use region-specific badge count
+        if (IsPlayerInKantoRegion())
         {
-            if (sData->badgeCount[i])
-            {
-                FillBgTilemapBufferRect(3, tileNum, x, 15, 1, 1, palNum);
-                FillBgTilemapBufferRect(3, tileNum + 1, x + 1, 15, 1, 1, palNum);
-                FillBgTilemapBufferRect(3, tileNum + 16, x, 16, 1, 1, palNum);
-                FillBgTilemapBufferRect(3, tileNum + 17, x + 1, 16, 1, 1, palNum);
-            }
+            badgeCount = CountKantoBadges();
+        }
+        else
+        {
+            badgeCount = CountHoennBadges();
+        }
+        
+        // Draw badges based on current region
+        for (i = 0; i < badgeCount && i < NUM_BADGES; i++, tileNum += 2, x += 3)
+        {
+            FillBgTilemapBufferRect(3, tileNum, x, 15, 1, 1, palNum);
+            FillBgTilemapBufferRect(3, tileNum + 1, x + 1, 15, 1, 1, palNum);
+            FillBgTilemapBufferRect(3, tileNum + 16, x, 16, 1, 1, palNum);
+            FillBgTilemapBufferRect(3, tileNum + 17, x + 1, 16, 1, 1, palNum);
         }
     }
     CopyBgTilemapBufferToVram(3);
@@ -1842,29 +1957,24 @@ static u8 GetSetCardType(void)
 {
     if (sData == NULL)
     {
-        if (gGameVersion == VERSION_FIRE_RED || gGameVersion == VERSION_LEAF_GREEN)
-            return CARD_TYPE_FRLG;
-        else if (gGameVersion == VERSION_EMERALD)
-            return CARD_TYPE_EMERALD;
-        else
-            return CARD_TYPE_RS;
+        // Use dynamic region detection for new trainer cards
+        u8 currentRegionType = GetCurrentRegionCardType();
+        return currentRegionType;
     }
     else
     {
-        if (sData->trainerCard.version == VERSION_FIRE_RED || sData->trainerCard.version == VERSION_LEAF_GREEN)
+        // For existing trainer cards, use dynamic region detection
+        u8 currentRegionType = GetCurrentRegionCardType();
+        
+        if (currentRegionType == CARD_TYPE_FRLG)
         {
             sData->isHoenn = FALSE;
             return CARD_TYPE_FRLG;
         }
-        else if (sData->trainerCard.version == VERSION_EMERALD)
-        {
-            sData->isHoenn = TRUE;
-            return CARD_TYPE_EMERALD;
-        }
         else
         {
             sData->isHoenn = TRUE;
-            return CARD_TYPE_RS;
+            return CARD_TYPE_EMERALD;
         }
     }
 }
@@ -1899,4 +2009,145 @@ static void CreateTrainerCardTrainerPic(void)
                     8,
                     WIN_TRAINER_PIC);
     }
+}
+
+// Add these new functions after the existing includes and before the existing functions
+
+// Check if player is currently in Kanto region
+static bool8 IsPlayerInKantoRegion(void)
+{
+    // Check if current map is in Kanto map group
+    // Kanto is map group 8 (gMapGroup_Kanto)
+    return (gSaveBlock1Ptr->location.mapGroup == 8);
+}
+
+// Get the current region-based card type (dynamic switching)
+static u8 GetCurrentRegionCardType(void)
+{
+    if (IsPlayerInKantoRegion())
+    {
+        return CARD_TYPE_FRLG;  // Kanto style
+    }
+    else
+    {
+        return CARD_TYPE_EMERALD;  // Hoenn style
+    }
+}
+
+// Check if player has caught all Kanto Pokémon (for Kanto region cards)
+static bool8 HasAllKantoMons(void)
+{
+    // This is a placeholder - you'll need to implement Kanto Pokémon tracking
+    // For now, return FALSE to indicate incomplete Kanto Pokédex
+    return FALSE;
+}
+
+// Count Kanto badges obtained
+static u8 CountKantoBadges(void)
+{
+    u8 badgeCount = 0;
+    u8 i;
+    
+    // Check Kanto badge flags (you'll need to define these)
+    // For now, we'll use the existing badge flags as a placeholder
+    for (i = 0; i < NUM_BADGES; i++)
+    {
+        if (FlagGet(FLAG_BADGE01_GET + i))
+            badgeCount++;
+    }
+    
+    return badgeCount;
+}
+
+// Count Hoenn badges obtained
+static u8 CountHoennBadges(void)
+{
+    u8 badgeCount = 0;
+    u8 i;
+    
+    // Check Hoenn badge flags (you'll need to define these)
+    // For now, we'll use the existing badge flags as a placeholder
+    for (i = 0; i < NUM_BADGES; i++)
+    {
+        if (FlagGet(FLAG_BADGE01_GET + i))
+            badgeCount++;
+    }
+    
+    return badgeCount;
+}
+
+// New function to refresh trainer card data when player changes regions
+void RefreshTrainerCardForCurrentRegion(void)
+{
+    // Only refresh if trainer card data is currently loaded
+    if (sData != NULL)
+    {
+        // Regenerate card data for current region
+        TrainerCard_GenerateCardForPlayer(&sData->trainerCard);
+        
+        // Update card type and region flag
+        sData->cardType = GetCurrentRegionCardType();
+        sData->isHoenn = (sData->cardType != CARD_TYPE_FRLG);
+        
+        // Reload graphics for new region
+        sData->gfxLoadState = 0;
+        LoadCardGfx();
+        
+        // Update badge count array for current region
+        u8 i;
+        if (IsPlayerInKantoRegion())
+        {
+            // Set Kanto badge count
+            for (i = 0; i < NUM_BADGES; i++)
+            {
+                sData->badgeCount[i] = (i < CountKantoBadges()) ? 1 : 0;
+            }
+        }
+        else
+        {
+            // Set Hoenn badge count
+            for (i = 0; i < NUM_BADGES; i++)
+            {
+                sData->badgeCount[i] = (i < CountHoennBadges()) ? 1 : 0;
+            }
+        }
+        
+        // Redraw the card with new region data
+        DrawStarsAndBadgesOnCard();
+    }
+
+// New function to refresh trainer card data when player changes regions
+void RefreshTrainerCardForCurrentRegion(void)
+{
+    // Only refresh if trainer card data is currently loaded
+    if (sData = CARD_TYPE_FRLG);
+        
+        // Reload graphics for new region
+        sData->gfxLoadState = 0;
+        LoadCardGfx();
+        
+        // Update badge count array for current region
+        u8 i;
+        if (IsPlayerInKantoRegion())
+        {
+            // Set Kanto badge count
+            for (i = 0; i < NUM_BADGES; i++)
+            {
+                sData->badgeCount[i] = (i < CountKantoBadges()) ? 1 : 0;
+            }
+        }
+        else
+        {
+            // Set Hoenn badge count
+            for (i = 0; i < NUM_BADGES; i++)
+            {
+                sData->badgeCount[i] = (i < CountHoennBadges()) ? 1 : 0;
+            }
+        }
+        
+        // Redraw the card with new region data
+        DrawStarsAndBadgesOnCard();
+    }
+}
+
 }

@@ -244,16 +244,88 @@
 #define OBJ_EVENT_GFX_LUGIA                      237
 #define OBJ_EVENT_GFX_HOOH                       238
 
-// NOTE: By default, the max value for NUM_OBJ_EVENT_GFX is 239.
+// Kanto Gym Leaders
+#define OBJ_EVENT_GFX_BROCK                      239
+#define OBJ_EVENT_GFX_MISTY                      240
+#define OBJ_EVENT_GFX_LT_SURGE                   241
+#define OBJ_EVENT_GFX_ERIKA                      242
+#define OBJ_EVENT_GFX_KOGA                       243
+#define OBJ_EVENT_GFX_SABRINA                    244
+#define OBJ_EVENT_GFX_BLAINE                     245
+#define OBJ_EVENT_GFX_GIOVANNI                   246
+
+// Additional Kanto NPCs
+#define OBJ_EVENT_GFX_BALDING_MAN                247
+#define OBJ_EVENT_GFX_BATTLE_GIRL                248
+#define OBJ_EVENT_GFX_BEAUTY                     249
+#define OBJ_EVENT_GFX_BIKER                      250
+#define OBJ_EVENT_GFX_BLACKBELT                  251
+#define OBJ_EVENT_GFX_BOY                        252
+#define OBJ_EVENT_GFX_BUG_CATCHER                253
+#define OBJ_EVENT_GFX_CAMERAMAN                  254
+#define OBJ_EVENT_GFX_CAMPER                     255
+#define OBJ_EVENT_GFX_CLERK                      256
+#define OBJ_EVENT_GFX_COOLTRAINER_F              257
+#define OBJ_EVENT_GFX_COOLTRAINER_M              258
+#define OBJ_EVENT_GFX_FAT_MAN                    259
+#define OBJ_EVENT_GFX_FISHER                     260
+#define OBJ_EVENT_GFX_GBA_KID                    261
+#define OBJ_EVENT_GFX_GENTLEMAN                  262
+#define OBJ_EVENT_GFX_GYM_GUY                    263
+#define OBJ_EVENT_GFX_HIKER                      264
+#define OBJ_EVENT_GFX_LASS                       265
+#define OBJ_EVENT_GFX_LITTLE_BOY                 266
+#define OBJ_EVENT_GFX_LITTLE_GIRL                267
+#define OBJ_EVENT_GFX_MAN                        268
+#define OBJ_EVENT_GFX_MG_DELIVERYMAN             269
+#define OBJ_EVENT_GFX_MOM                        270
+#define OBJ_EVENT_GFX_NURSE                      271
+#define OBJ_EVENT_GFX_OLD_MAN_1                  272
+#define OBJ_EVENT_GFX_OLD_MAN_2                  273
+#define OBJ_EVENT_GFX_OLD_MAN_LYING_DOWN         274
+#define OBJ_EVENT_GFX_OLD_WOMAN                  275
+#define OBJ_EVENT_GFX_PICNICKER                  276
+#define OBJ_EVENT_GFX_RICH_BOY                   277
+#define OBJ_EVENT_GFX_ROCKER                     278
+#define OBJ_EVENT_GFX_SAILOR                     279
+#define OBJ_EVENT_GFX_SCIENTIST                  280
+#define OBJ_EVENT_GFX_SITTING_BOY                281
+#define OBJ_EVENT_GFX_SUPER_NERD                 282
+#define OBJ_EVENT_GFX_SWIMMER_F_LAND             283
+#define OBJ_EVENT_GFX_SWIMMER_F_WATER            284
+#define OBJ_EVENT_GFX_SWIMMER_M_LAND             285
+#define OBJ_EVENT_GFX_SWIMMER_M_WATER            286
+#define OBJ_EVENT_GFX_TEACHY_TV_HOST             287
+#define OBJ_EVENT_GFX_TRAINER_TOWER_DUDE         288
+#define OBJ_EVENT_GFX_TUBER_F                    289
+#define OBJ_EVENT_GFX_TUBER_M_LAND               290
+#define OBJ_EVENT_GFX_TUBER_M_WATER              291
+#define OBJ_EVENT_GFX_UNION_ROOM_RECEPTIONIST    292
+#define OBJ_EVENT_GFX_UNUSED_MAN                 293
+#define OBJ_EVENT_GFX_UNUSED_WOMAN               294
+#define OBJ_EVENT_GFX_UNUSED_MALE_RECEPTIONIST   295
+#define OBJ_EVENT_GFX_WOMAN_1                    296
+#define OBJ_EVENT_GFX_WOMAN_2                    297
+#define OBJ_EVENT_GFX_WOMAN_3                    298
+#define OBJ_EVENT_GFX_YOUNGSTER                  299
+#define OBJ_EVENT_GFX_RED_SURF_RUN               300
+#define OBJ_EVENT_GFX_RED_VS_SEEKER_BIKE         301
+#define OBJ_EVENT_GFX_GREEN_SURF_RUN             302
+#define OBJ_EVENT_GFX_GREEN_VS_SEEKER_BIKE       303
+#define OBJ_EVENT_GFX_RS_BRENDAN                 304
+#define OBJ_EVENT_GFX_RS_MAY                     305
+#define OBJ_EVENT_GFX_SEAGALLOP                   306
+
+// NOTE: By default, the max value for NUM_OBJ_EVENT_GFX is 306.
 //
 // Object event graphics ids are 1 byte in size (max value of 255), and the dynamic
 // graphics ids that start after NUM_OBJ_EVENT_GFX reach this limit. No graphics id
-// uses the value 239 itself, so removing the "+ 1" in OBJ_EVENT_GFX_VARS would
-// allow increasing NUM_OBJ_EVENT_GFX to 240. There are also a handful of unused
+// uses the value 305 itself, so removing the "+ 1" in OBJ_EVENT_GFX_VARS would
+// allow increasing NUM_OBJ_EVENT_GFX to 306. There are also a handful of unused
 // object graphics that can be removed. If more graphics are needed, anything that
 // stores graphics ids will need to be increased in size. See wiki entry below:
 // https://github.com/pret/pokeemerald/wiki/Feature-Branches#overworld-expansion
-#define NUM_OBJ_EVENT_GFX                        239
+#define NUM_OBJ_EVENT_GFX                        306
 
 
 // These are dynamic object gfx ids.

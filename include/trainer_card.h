@@ -70,6 +70,10 @@ u8 GetTrainerCardStars(u8 cardId);
 void CopyTrainerCardData(struct TrainerCard *dst, struct TrainerCard *src, u8 gameVersion);
 void ShowPlayerTrainerCard(void (*callback)(void));
 void ShowTrainerCardInLink(u8 cardId, void (*callback)(void));
+void TrainerCard_GenerateCardForPlayer(struct TrainerCard *trainerCard);
 void TrainerCard_GenerateCardForLinkPlayer(struct TrainerCard *trainerCard);
+
+// New function for dynamic region switching
+void RefreshTrainerCardForCurrentRegion(void);
 
 #endif // GUARD_TRAINER_CARD_H

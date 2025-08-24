@@ -539,58 +539,59 @@ SlateportCity_Harbor_Text_ThisWillHelpResearch:
 	.string "CAPT. STERN: Thanks, {PLAYER}{KUN}!\n"
 	.string "This will help our research a lot!$"
 
-@ Inter-Region Ferry System
-SlateportCity_Harbor_EventScript_KantoFerryAttendant::
+@ Inter-Region Ferry System - SS Tidal Services
+SlateportCity_Harbor_EventScript_InterRegionFerryAttendant::
 	lock
 	faceplayer
-	goto_if_unset FLAG_FERRY_UNLOCKED, SlateportCity_Harbor_EventScript_FerryLocked
-	msgbox SlateportCity_Harbor_Text_WelcomeToKantoFerry, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, SlateportCity_Harbor_EventScript_DeclineFerry
-	msgbox SlateportCity_Harbor_Text_BoardingKantoFerry, MSGBOX_DEFAULT
+	goto_if_unset FLAG_FERRY_UNLOCKED, SlateportCity_Harbor_EventScript_InterRegionFerryLocked
+	msgbox SlateportCity_Harbor_Text_WelcomeToInterRegionFerry, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SlateportCity_Harbor_EventScript_DeclineInterRegionFerry
+	msgbox SlateportCity_Harbor_Text_BoardingInterRegionFerry, MSGBOX_DEFAULT
 	closemessage
-	call SlateportCity_Harbor_EventScript_BoardKantoFerry
-	warp MAP_SS_ANNE_DECK, 15, 25
+	call SlateportCity_Harbor_EventScript_BoardInterRegionFerry
+	warp MAP_VERMILION_CITY, 15, 25
 	waitstate
 	release
 	end
 
-SlateportCity_Harbor_EventScript_FerryLocked::
-	msgbox SlateportCity_Harbor_Text_FerryCurrentlyUnavailable, MSGBOX_DEFAULT
+SlateportCity_Harbor_EventScript_InterRegionFerryLocked::
+	msgbox SlateportCity_Harbor_Text_InterRegionFerryUnavailable, MSGBOX_DEFAULT
 	release
 	end
 
-SlateportCity_Harbor_EventScript_DeclineFerry::
-	msgbox SlateportCity_Harbor_Text_ComeBackAnytime, MSGBOX_DEFAULT
+SlateportCity_Harbor_EventScript_DeclineInterRegionFerry::
+	msgbox SlateportCity_Harbor_Text_ComeBackForInterRegionFerry, MSGBOX_DEFAULT
 	release
 	end
 
-SlateportCity_Harbor_EventScript_BoardKantoFerry::
-	applymovement LOCALID_PLAYER, SlateportCity_Harbor_Movement_BoardFerry
+SlateportCity_Harbor_EventScript_BoardInterRegionFerry::
+	applymovement LOCALID_PLAYER, SlateportCity_Harbor_Movement_BoardInterRegionFerry
 	waitmovement 0
 	return
 
-SlateportCity_Harbor_Movement_BoardFerry:
+SlateportCity_Harbor_Movement_BoardInterRegionFerry:
 	walk_right
 	walk_right
 	walk_up
 	step_end
 
-SlateportCity_Harbor_Text_WelcomeToKantoFerry:
-	.string "CAPTAIN: Welcome to the Kanto Ferry!\n"
-	.string "Would you like to sail to the Kanto\l"
+SlateportCity_Harbor_Text_WelcomeToInterRegionFerry:
+	.string "CAPTAIN: Welcome to SS Tidal\n"
+	.string "Services!\p"
+	.string "Would you like to sail to the Kanto\n"
 	.string "region? It's quite a journey!$"
 
-SlateportCity_Harbor_Text_BoardingKantoFerry:
+SlateportCity_Harbor_Text_BoardingInterRegionFerry:
 	.string "CAPTAIN: All aboard! Next stop,\n"
-	.string "the S.S. Anne in Kanto!$"
+	.string "Vermilion City in Kanto!$"
 
-SlateportCity_Harbor_Text_FerryCurrentlyUnavailable:
-	.string "CAPTAIN: I'm sorry, but the Kanto\n"
-	.string "Ferry service is currently unavailable.\p"
+SlateportCity_Harbor_Text_InterRegionFerryUnavailable:
+	.string "CAPTAIN: I'm sorry, but the inter-region\n"
+	.string "ferry service is currently unavailable.\p"
 	.string "This route only opens to trainers who\n"
 	.string "have proven themselves by defeating\l"
 	.string "both the Hoenn and Kanto Elite Four!$"
 
-SlateportCity_Harbor_Text_ComeBackAnytime:
+SlateportCity_Harbor_Text_ComeBackForInterRegionFerry:
 	.string "CAPTAIN: Come back anytime when\n"
 	.string "you're ready to sail to Kanto!$"

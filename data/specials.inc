@@ -394,6 +394,10 @@ gSpecials::
 	def_special BufferQuizPrizeItem
 	def_special SetQuizLadyState_Complete
 	def_special BufferQuizAuthorNameAndCheckIfLady
+	def_special DoSeagallopFerryScene
+	def_special DrawSeagallopDestinationMenu
+	def_special GetSelectedSeagallopDestination
+	def_special GetSeagallopNumber
 	def_special SetQuizLadyState_GivePrize
 	def_special ClearQuizLadyPlayerAnswer
 	def_special Script_QuizLadyOpenBagMenu

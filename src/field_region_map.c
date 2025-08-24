@@ -140,6 +140,7 @@ static void MCB2_FieldUpdateRegionMap(void)
 static void FieldUpdateRegionMap(void)
 {
     u8 offset;
+    const u8 *regionTitle;
 
     switch (sFieldRegionMapHandler->state)
     {
@@ -151,8 +152,15 @@ static void FieldUpdateRegionMap(void)
             break;
         case 1:
             DrawStdFrameWithCustomTileAndPalette(WIN_TITLE, FALSE, 0x27, 0xd);
-            offset = GetStringCenterAlignXOffset(FONT_NORMAL, gText_Hoenn, 0x38);
-            AddTextPrinterParameterized(WIN_TITLE, FONT_NORMAL, gText_Hoenn, offset, 1, 0, NULL);
+            
+            // Determine region title based on player's current location
+            if (gSaveBlock1Ptr->location.mapGroup == 8) // Kanto map group
+                regionTitle = gText_Kanto;
+            else
+                regionTitle = gText_Hoenn;
+            
+            offset = GetStringCenterAlignXOffset(FONT_NORMAL, regionTitle, 0x38);
+            AddTextPrinterParameterized(WIN_TITLE, FONT_NORMAL, regionTitle, offset, 1, 0, NULL);
             ScheduleBgCopyTilemapToVram(0);
             DrawStdFrameWithCustomTileAndPalette(WIN_MAPSEC_NAME, FALSE, 0x27, 0xd);
             PrintRegionMapSecName();
